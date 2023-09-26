@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import './style.css'
 class RegistrationPage extends Component {
   constructor() {
     super();
