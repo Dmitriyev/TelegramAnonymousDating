@@ -9,8 +9,8 @@ namespace handlers {
     void RegisterHandler(
         TPostgreSQLAdapter& adapter,
         const HttpRequestPtr& req,
-        std::function<void(const HttpResponsePtr&)>&& callback)
-    {
+        std::function<void(const HttpResponsePtr&)>&& callback
+    ) {
         auto resp = HttpResponse::newHttpResponse();
         const auto reqBody = req->getJsonObject();
         if (!reqBody) {
