@@ -24,8 +24,6 @@ namespace db_adapter {
                 "'" << user.Orientation << "', " <<
                 "'" << user.Bio << "');";
 
-            LOG_INFO << insertCommand.str();
-
             work.exec0(insertCommand.str());
             work.commit();
             return true;
