@@ -27,5 +27,5 @@ jobs:
         with:
           name: backend-binary
           path: |
-            server
+            bin
           retention-days: 3
