@@ -1,0 +1,6 @@
+tap "homebrew/bundle"
+tap "homebrew/core"
+tap "mongodb/brew"
+tap "ngrok/ngrok"
+brew "mongodb/brew/mongodb-community@5.0"
+cask "ngrok"

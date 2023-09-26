@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './style.css'
-import './public/index.html'
-class RegistrationPage extends Component {
+import 'index.html'
+class RegistrationForm extends Component {
   constructor() {
     super();
     this.state = {
@@ -140,4 +140,4 @@ class RegistrationPage extends Component {
     )       
 }
 }
-export default RegistrationForm
+export default RegistrationForm;
