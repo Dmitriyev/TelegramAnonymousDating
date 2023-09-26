@@ -1,67 +1,136 @@
-import React, {useState,setState} from 'react';
-import './style.css'
-function RegistrationForm() {
-    
-    const [Name, setName] = useState(null);
-    const [lastName, setLastName] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [password,setPassword] = useState(null);
-    const [confirmPassword,setConfirmPassword] = useState(null);
+import React, { Component } from 'react';
 
-    const handleInputChange = (e) => {
-        const {id , value} = e.target;
-        if(id === "Name"){
-            setName(value);
-        }
-        if(id === "lastName"){
-            setLastName(value);
-        }
-        if(id === "email"){
-            setEmail(value);
-        }
-        if(id === "password"){
-            setPassword(value);
-        }
-        if(id === "confirmPassword"){
-            setConfirmPassword(value);
-        }
+class RegistrationPage extends Component {
+  constructor() {
+    super();
+    this.state = {
+      name: '',
+      age: '',
+      sex: 'male',
+      orientation: 'straight',
+      city: 'unknown',
+      bio: '',
+      profilePhoto: null,
+    };
+  }
 
-    }
+  handleInputChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
 
+  handleFileChange = (e) => {
+    const file = e.target.files[0];
+    this.setState({ profilePhoto: file });
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    // Send to server
     const handleSubmit  = () => {
         console.log(Name,lastName,email,password,confirmPassword);
     }
 
     return(
-        <div className="form">
-            <div className="form-body">
-                <div className="username">
-                    <label className="form__label" for="Name"> Name </label>
-                    <input className="form__input" type="text" value={Name} onChange = {(e) => handleInputChange(e)} id="Name" placeholder="Name"/>
-                </div>
-                <div className="lastname">
-                    <label className="form__label" for="lastName">Last Name </label>
-                    <input  type="text" name="" id="lastName" value={lastName}  className="form__input" onChange = {(e) => handleInputChange(e)} placeholder="LastName"/>
-                </div>
-                <div className="email">
-                    <label className="form__label" for="email">Email </label>
-                    <input  type="email" id="email" className="form__input" value={email} onChange = {(e) => handleInputChange(e)} placeholder="Email"/>
-                </div>
-                <div className="password">
-                    <label className="form__label" for="password">Password </label>
-                    <input className="form__input" type="password"  id="password" value={password} onChange = {(e) => handleInputChange(e)} placeholder="Password"/>
-                </div>
-                <div className="confirm-password">
-                    <label className="form__label" for="confirmPassword">Confirm Password </label>
-                    <input className="form__input" type="password" id="confirmPassword" value={confirmPassword} onChange = {(e) => handleInputChange(e)} placeholder="Confirm Password"/>
-                </div>
-            </div>
-            <div class="footer">
-                <button onClick={()=>handleSubmit()} type="submit" class="btn">Register</button>
-            </div>
+        <div class="container">
+        <div class="row main-form">
+        <form class="" method="post" action="#">
+        
+        <div class="form-group">
+        <label for="name" class="cols-sm-2 control-label">Name</label>
+        <div class="cols-sm-10">
+        <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+        <input type="text" class="form-control" name="name" id="name" placeholder="Enter your Name"/>
+        </div>
+        </div>
+        </div>
+       
+        <div class="form-group">
+        <label for="age" class="cols-sm-2 control-label">Age</label>
+        <div class="cols-sm-10">
+        <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
+        <input type="number" class="form-control" name="age" id="age" placeholder="Enter your Age"/>
+        </div>
+        </div>
+        </div>
+       
+        <div class="form-group">
+        <label for="sex" class="cols-sm-2 control-label">Sex</label>
+        <div class="cols-sm-10">
+        <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+        <select 
+              name="sex"
+              value={this.state.sex}
+              onChange={this.handleInputChange}
+            >
+              <option value="male">Man</option>
+              <option value="female">Women</option>
+              <option value="other">Other</option>
+            </select>
+        </div>
+        </div>
+        </div>
+       
+        <div class="form-group">
+        <label for="orientation" class="cols-sm-2 control-label">Orientation</label>
+        <div class="cols-sm-10">
+        <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+        <select
+              name="orientation"
+              value={this.state.orientation}
+              onChange={this.handleInputChange}
+            >
+              <option value="straight">Hetero</option>
+              <option value="gay">Gay</option>
+              <option value="bisexual">Bi</option>
+              <option value="other">Other</option>
+            </select>   
+        </div>
+        </div>
+        </div>
+       
+        <div class="form-group">
+        <label for="city" class="cols-sm-2 control-label">City</label>
+        <div class="cols-sm-10">
+        <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
+        <select
+              name="city"
+              value={this.state.city}
+              onChange={this.handleInputChange}
+            >
+              <option value="city1">New Orsk</option>
+              <option value="city2">Maskvabad</option>
+              <option value="city2">Chechnya</option>
+              {/* if need more cityzen */}
+            </select>
+        </div>
+        </div>
+        </div>
+
+        <div class="form-group">
+        <label for="bio" class="cols-sm-2 control-label">Bio</label>
+        <div class="cols-sm-10">
+        <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+        <input type="text" class="form-control" name="bio" id="bio" placeholder="Enter your Bio"/>
+        </div>
+        </div>
+        </div>
+       
+        <div class="form-group ">
+        <a href="#" target="_blank" type="button" id="button" class="btn btn-primary btn-lg btn-block login-button">Register</a>
+        </div>
+        
+        </form>
+        </div>
         </div>
        
     )       
 }
-
-export default RegistrationForm
+}
+export default RegistrationForm;

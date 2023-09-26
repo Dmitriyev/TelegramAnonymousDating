@@ -1,36 +1,53 @@
-body{
-    background: #bdc3c7;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+.form-group{
+ margin-bottom: 15px;
 }
-
-.form{
-    background-color: white;
-    border-radius: 5px;
-    /*width: 550px;*/
-    margin: 20px auto;
-    padding: 20px;
-    /* height: 600px; */
+label{
+ margin-bottom: 15px;
 }
-
-.form-body{
-    text-align: left;
-    padding: 20px 10px;
+input,
+input::-webkit-input-placeholder {
+ font-size: 11px;
+ padding-top: 3px;
 }
-
-.form-body > *{
-    padding: 5px;
+.form-control {
+ height: auto!important;
+padding: 8px 12px !important;
 }
-
-.form__label{
-    width: 40%;
+.input-group {
+ box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
 }
-
-.form_input{
-    width: 60%;
+#button {
+ border: 1px solid #ccc;
+ margin-top: 28px;
+ padding: 6px 12px;
+ color: #666;
+ text-shadow: 0 1px #fff;
+ cursor: pointer;
+ border-radius: 3px 3px;
+ box-shadow: 0 1px #fff inset, 0 1px #ddd;
+ background: #f5f5f5;
+ background: -moz-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
+ background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f5f5), color-stop(100%, #eeeeee));
+ background: -webkit-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
+ background: -o-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
+ background: -ms-linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
+ background: linear-gradient(top, #f5f5f5 0%, #eeeeee 100%);
+ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5', endColorstr='#eeeeee', GradientType=0);
 }
-
-.footer{
-    text-align: center;
+.main-form{
+ margin-top: 30px;
+ margin: 0 auto;
+ max-width: 400px;
+ padding: 10px 40px;
+background:#009edf;
+color: #FFF;
+text-shadow: none;
+box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.31);
 }
-
+span.input-group-addon i {
+ color: #009edf;
+ font-size: 17px;
+}
+.login-button{
+ margin-top: 5px;
+}
