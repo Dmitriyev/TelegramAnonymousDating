@@ -6,21 +6,22 @@ on:
       - main
 
 jobs:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-    - name: deps install and build backend
-      run: |
-        apt update
-        apt install -y libjsoncpp-dev
-        ln -s /usr/include/jsoncpp/json/ /usr/include/json
-        apt install -y uuid-dev zlib1g-dev openssl libssl-dev
-        ./build.sh
-    - name: Archive binary artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: backend-binary
-        path: |
-          server
-        retention-days: 3
+  build_backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: deps install and build backend
+        run: |
+          apt update
+          apt install -y libjsoncpp-dev
+          ln -s /usr/include/jsoncpp/json/ /usr/include/json
+          apt install -y uuid-dev zlib1g-dev openssl libssl-dev
+          ./build.sh
+      - name: Archive binary artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: backend-binary
+          path: |
+            server
+          retention-days: 3
