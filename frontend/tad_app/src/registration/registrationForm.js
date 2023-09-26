@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './style.css'
+import './public/index.html'
 class RegistrationPage extends Component {
   constructor() {
     super();
@@ -37,7 +38,7 @@ class RegistrationPage extends Component {
         <form class="" method="post" action="#">
         
         <div class="form-group">
-        <label for="name" class="cols-sm-2 control-label">Name</label>
+        <label for="name" class="cols-sm-2 control-label">Your Name</label>
         <div class="cols-sm-10">
         <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
@@ -47,7 +48,7 @@ class RegistrationPage extends Component {
         </div>
        
         <div class="form-group">
-        <label for="age" class="cols-sm-2 control-label">Age</label>
+        <label for="age" class="cols-sm-2 control-label">Your Age</label>
         <div class="cols-sm-10">
         <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
@@ -57,61 +58,68 @@ class RegistrationPage extends Component {
         </div>
        
         <div class="form-group">
-        <label for="sex" class="cols-sm-2 control-label">Sex</label>
+        <label for="sex" class="cols-sm-2 control-label">Sex
+        </label>
         <div class="cols-sm-10">
         <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-        <select 
-              name="sex"
-              value={this.state.sex}
-              onChange={this.handleInputChange}
-            >
-              <option value="male">Man</option>
-              <option value="female">Women</option>
-              <option value="other">Other</option>
-            </select>
+        <select type="sex" class="form-control" name="sex" id="sex" placeholder="Select your Sex"
+                     name0="sex"
+                     value={this.state.sex}
+                     onChange={this.handleInputChange}
+                   >
+                     <option value="male">Man</option>
+                     <option value="female">Women</option>
+                     <option value="Gay">Vertosexual</option>
+                     <option value="Gay">Doublesexual</option>
+                     <option value="other">Other</option>
+                   </select>
+       
         </div>
         </div>
         </div>
        
         <div class="form-group">
-        <label for="orientation" class="cols-sm-2 control-label">Orientation</label>
+        <label for="orientation" class="cols-sm-2 control-label">Orientation
+        </label>
         <div class="cols-sm-10">
         <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-        <select
-              name="orientation"
-              value={this.state.orientation}
-              onChange={this.handleInputChange}
-            >
-              <option value="straight">Hetero</option>
-              <option value="gay">Gay</option>
-              <option value="bisexual">Bi</option>
-              <option value="other">Other</option>
-            </select>   
+        <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
+        <select type="orientation" class="form-control" name="orientation" id="orientation" placeholder="Select your Orientation"
+                     name1="orientation"
+                     value={this.state.orientation}
+                     onChange={this.handleInputChange}
+                   >
+                     <option value="Hetero">Hetero</option>
+                     <option value="Bi">Bi</option>
+                     <option value="Bi">Gay</option>
+                     <option value="Bi">Lesbi</option>
+                   </select>
+       
         </div>
         </div>
         </div>
        
         <div class="form-group">
-        <label for="city" class="cols-sm-2 control-label">City</label>
+        <label for="city" class="cols-sm-2 control-label">City
+        </label>
         <div class="cols-sm-10">
         <div class="input-group">
-        <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-        <select
-              name="city"
-              value={this.state.city}
-              onChange={this.handleInputChange}
-            >
-              <option value="city1">New Orsk</option>
-              <option value="city2">Maskvabad</option>
-              <option value="city2">Chechnya</option>
-              {/* if need more cityzen */}
-            </select>
+        <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="false"></i></span>
+        <select type="city" class="form-control" name="ciry" id="ciry" placeholder="Select your Citizen"
+                     name2="sex"
+                     value={this.state.city}
+                     onChange={this.handleInputChange}
+                   >
+                     <option value="male">New Orsk</option>
+                     <option value="female">Chechnya</option>
+                     <option value="other">Maskvabad</option>
+                   </select>
+       
         </div>
         </div>
         </div>
-
+        
         <div class="form-group">
         <label for="bio" class="cols-sm-2 control-label">Bio</label>
         <div class="cols-sm-10">
@@ -123,14 +131,13 @@ class RegistrationPage extends Component {
         </div>
        
         <div class="form-group ">
-        <a href="#" target="_blank" type="button" id="button" class="btn btn-primary btn-lg btn-block login-button">Register</a>
+        <a href="#" target="_blank" type="button" id="button" class="btn btn-primary btn-lg btn-block login-button">Start Search</a>
         </div>
         
         </form>
         </div>
-        </div>
-       
+        </div>       
     )       
 }
 }
-export default RegistrationForm;
+export default RegistrationForm
