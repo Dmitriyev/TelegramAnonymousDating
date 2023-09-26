@@ -11,12 +11,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: deps install and build backend
+      - name: Install deps
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: libjsoncpp-dev uuid-dev zlib1g-dev openssl libssl-dev
+          version: 1.0
+      - name: Build backend
         run: |
-          apt update
-          apt install -y libjsoncpp-dev
-          ln -s /usr/include/jsoncpp/json/ /usr/include/json
-          apt install -y uuid-dev zlib1g-dev openssl libssl-dev
+          sudo ln -s /usr/include/jsoncpp/json/ /usr/include/json
           ./build.sh
       - name: Archive binary artifacts
         uses: actions/upload-artifact@v3
