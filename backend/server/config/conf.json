@@ -1,0 +1,9 @@
+{
+    "server_host": "127.0.0.1",
+    "server_port": 8848,
+    "postgresql_host": "127.0.0.1",
+    "postgresql_db": "TAD",
+    "postgresql_user_table": "users",
+    "postgresql_user": "<>",
+    "postgresql_password": "<>"
+}

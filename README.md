@@ -23,6 +23,7 @@ sudo scripts/ubuntu_22_04_install_system_deps.sh
 ```
 ./build.sh
 ```
+Build script copies config file into bin directory. Before running server process you should copy ```conf\_template.json``` file with different name for example ```conf.json``` (otherwise it wil be rewritten after rebuilding binaries). Than fill ```postgresql_user``` and ```postgresql_password``` with correct credentials. 
 
 # Starting server
 - Start Postges database service ```sudo scripts/prepare_server_env.sh```
@@ -34,18 +35,17 @@ sudo -u postgres -i
 Then create tables
 ```
 createdb TAD
-psql TAD -q -c "CREATE TABLE [IF NOT EXISTS] users (
+psql TAD -q -c "CREATE TABLE IF NOT EXISTS users (
     id BIGINT PRIMARY KEY NOT NULL,
     username VARCHAR(50) NOT NULL,
     age SMALLINT NOT NULL,
-    sex VARCHAR(10) NOT NULL,
-    orientation VARCHAR(10) NOT NULL,
+    sex SMALLINT NOT NULL,
+    orientation SMALLINT NOT NULL,
     city VARCHAR(50) NOT NULL,
     bio TEXT
 );"
-
 ```
-- Run ```bin/server```
+- Run ```bin/server conf.json```
 
 # Server decription
 
