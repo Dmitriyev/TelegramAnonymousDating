@@ -12,7 +12,7 @@ namespace db_adapter {
     {
     }
 
-    bool TPostgreSQLAdapter::WriteUserData(const common::TUser& user, bool /*rewriteRow*/) {
+    bool TPostgreSQLAdapter::InsertUserData(const common::TUser& user) {
         pqxx::work work(Connection);
         try {
             std::stringstream insertCommand;
@@ -21,15 +21,42 @@ namespace db_adapter {
                 "'" << user.Name << "', " <<
                 user.Age << ", " <<
                 user.Sex << ", " <<
-                "'" << user.Orientation << "', " <<
+                user.Orientation << ", " <<
+                "'" << user.City << "', " <<
                 "'" << user.Bio << "');";
 
+            LOG_INFO << insertCommand.str();
             work.exec0(insertCommand.str());
             work.commit();
             return true;
                 
         } catch (const std::exception& e) {
             LOG_ERROR << "Canot write user data into table " << TableNames.UsersTable << ". " << e.what();
+            work.abort();
+            return false;
+        }
+    }
+
+    bool TPostgreSQLAdapter::UpdateUserData(const common::TUser& user) {
+        pqxx::work work(Connection);
+        try {
+            std::stringstream updateCommand;
+            updateCommand << "UPDATE " << TableNames.UsersTable << " SET " <<
+                "username = '" << user.Name << "', " <<
+                "age = " << user.Age << ", " <<
+                "sex = " << user.Sex << ", " <<
+                "orientation = " << user.Orientation << ", " <<
+                "city = '" << user.City << "', " <<
+                "bio = '" << user.Bio << "' " <<
+                "WHERE id = " << user.Id << ";";
+
+            LOG_INFO << updateCommand.str();
+            work.exec0(updateCommand.str());
+            work.commit();
+            return true;
+                
+        } catch (const std::exception& e) {
+            LOG_ERROR << "Canot update user data at table " << TableNames.UsersTable << ". " << e.what();
             work.abort();
             return false;
         }

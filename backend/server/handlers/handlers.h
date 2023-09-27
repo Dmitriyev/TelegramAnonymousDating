@@ -7,7 +7,19 @@
 #include <functional>
 
 namespace handlers {
-    void RegisterHandler(
+    enum class TAccountAction {
+        Create,
+        Update
+    };
+
+    void AccountHandler(
+        db_adapter::TPostgreSQLAdapter& adapter,
+        const drogon::HttpRequestPtr& req,
+        std::function<void(const drogon::HttpResponsePtr&)>&& callback,
+        TAccountAction action 
+    );
+
+    void AccountInfoHandler(
         db_adapter::TPostgreSQLAdapter& adapter,
         const drogon::HttpRequestPtr& req,
         std::function<void(const drogon::HttpResponsePtr&)>&& callback

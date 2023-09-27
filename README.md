@@ -69,3 +69,7 @@ Json fields:
 - city: string
 - bio: string
 
+### /edit\_account
+
+Edits user account. Parameter are same as in the [/register](#-/register) header
+
