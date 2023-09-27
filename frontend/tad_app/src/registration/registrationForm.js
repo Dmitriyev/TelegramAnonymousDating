@@ -1,124 +1,177 @@
-import React, {useState,setState} from 'react';
-import './style.css'
-function RegistrationForm() {
-    
-    const [Name, setName] = useState(null);
-    const [Age, setAge] = useState(null);
-    const [Gender, setGender] = useState(null);
-    const [Orientation,setOrientation] = useState(null);
-    const [City,setCity] = useState(null);
-    const [Bio,setBio] = useState(null);
+import React, { useState } from 'react';
+import './style.css';
+function RegistrationPage() {
+  const [name, setName] = useState('');
+  const [age, setAge] = useState('');
+  const [gender, setGender] = useState('');
+  const [orientation, setOrientation] = useState('');
+  const [city, setCity] = useState('');
+  const [bio, setBio] = useState('');
+  const [error, setError] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
 
-    function Dropdown() {
-        const [isOpen, setIsOpen] = useState(false);
-        const [selectedOption, setSelectedOption] = useState(null);
-      
-        const toggleDropdown = () => {
-          setIsOpen(!isOpen);
-        };
-      
-        const handleSelect = (option) => {
-          setSelectedOption(option);
-          setIsOpen(false); 
-        };
+  const validateName = (inputName) => {
+    if (/^[a-zA-Z]+$/.test(inputName) && inputName.length <= 20) {
+      setError('');
+      return true;
+    } else {
+      setError('Name only words');
+      return false;
     }
-    const handleInputChange = (e) => {
-        const {id , value} = e.target;
-        if(id === "Name"){
-            setName(value);
-        }
-        if(id === "Age"){
-            setAge(value);
-        }
-        if(id === "Gender"){
-            setGender(value);
-        }
-        if(id === "Orientation"){
-            setOrientation(value);
-        }
-        if(id === "City"){
-            setCity(value);
-        }
-        if(id === "Bio"){
-            setBio(value);
-        }
+  };
 
+  const validateBio = (inputBio) => {
+    if (inputBio.length <= 50) {
+          setError(""); 
+        } else {
+          setError("Bio >= 50 simbols");
+          return false
+        }
+      }
+  
+
+  const validateAge = (inputAge) => {
+    if (/^\d+$/.test(inputAge) && inputAge.length <= 2) {
+      setError('');
+      return true;
+    } else {
+      setError('Age only alpha-numeric and <100');
+      return false;
     }
+  };
 
-    const handleSubmit  = () => {
-        console.log(Name,Age,Gender,Orientation,City,Bio);
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedFile(file);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateName(name) && validateAge(age) && validateBio(bio)) {
+      console.log('Data send to server:', name, age, gender, orientation, city, bio);
+      if (selectedFile) {
+        console.log('Upload file:', selectedFile);
+      }
     }
+  };
 
-    return(
-            <div class="limiter">
-                <div class="container-login100">
-                    <div class="wrap-login100">
-                        <form class="login100-form validate-form">
-                            <span class="login100-form-title p-b-26">
-                                Welcome
-                            </span>
-                            <span class="login100-form-title p-b-48">
-                                <i class="zmdi zmdi-font"></i>
-                            </span>
-        
-                            <div class="wrap-input100 validate-input" data-validate = "Valid Name is: abc">
-                                <input class="input100" type="text" value={Name} name="Name"></input>
-                                <span class="focus-input100" data-placeholder="Name"></span>
-                            </div>
-        
-                            <div class="wrap-input100 validate-input" data-validate=">=0">
-                                <span class="btn-show-pass">
-                                    <i class="zmdi zmdi-eye"></i>
-                                </span>
-                                <input class="input100" type="number" value={Age} name="Age"></input>
-                                <span class="focus-input100" data-placeholder="Age"></span>
-                            </div>
-
-                            <div class="wrap-input100 validate-input">
-                                <span class="focus-input100"></span>
-                                    <select class="input100" name='Gender' id="Gender" value={Gender} onChange={handleInputChange} required>
-                                        <option value="Bi">Man</option>
-                                        <option value="Gay">Woman</option>
-                                        <option value="Hetero">DoubleSexual</option>
-                                    </select>
-                            </div>
-
-                            <div class="wrap-input100 validate-input" data-validate = "Valid Name is: abc">
-                                <span class="focus-input100"></span>
-                                    <select class="input100" name='Orientation' id="Orintation" value={Orientation} onChange={handleInputChange} required>
-                                        <option value="Bi">Bi</option>
-                                        <option value="Gay">Gay</option>
-                                        <option value="Hetero">Hetero</option>
-                                    </select>
-                            </div>
-
-                            <div class="wrap-input100 validate-input">
-                                <span class="focus-input100"></span>
-                                    <select class="input100" name='City' id="City" value={City} onChange={handleInputChange} required>
-                                        <option value="Bi">Moscow</option>
-                                        <option value="Gay">New York</option>
-                                        <option value="Hetero">Omsk</option>
-                                    </select>
-                            </div>
-
-                            <div class="wrap-input100 validate-input">
-                                <input class="input100" type="text" value={Bio} name="Bio"></input>
-                                <span class="focus-input100" data-placeholder="Bio"></span>
-                            </div>
-        
-                            <div class="container-login100-form-btn">
-                                <div class="wrap-login100-form-btn">
-                                    <div class="login100-form-bgbtn"></div>
-                                    <button class="login100-form-btn">
-                                        Start Search
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-    )       
+  return (
+    <div className="registration-page">
+      <h1>Welcome</h1>
+      <div className="form-group-center">
+          <button type="submit">
+          <label htmlFor="file" className="upload-button">
+            <p className='start-search-button' type='submit'>Choose Your Photo</p>
+        </label>
+      <input
+        type="file"
+        id="file"
+        accept="image/*"
+        style={{ display: 'none' }}
+        onChange={handleFileChange}
+      />
+          </button>
+          </div>
+      <div className="image-preview">
+        {selectedFile ? (
+          <img src={URL.createObjectURL(selectedFile)} alt="Profile" />
+        ) : (
+          <div className="placeholder">Preview</div>
+        )}
+      </div>
+      <form onSubmit={handleSubmit}>
+      <div className="form-group">
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            value={name}
+            placeholder='Enter you Name'
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="age">Age:</label>
+          <input
+            type="text"
+            id="age"
+            value={age}
+            placeholder='Enter your Age'
+            onChange={(e) => setAge(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="gender">Gender:</label>
+          <select
+            id="gender"
+            value={gender}
+            onChange={(e) => setGender(e.target.value)}
+            required
+          >
+            <option value="">Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            {/* <option value="Non-Binary">Non-Binary</option>
+            <option value="Transgender">Transgender</option> */}
+            {/* <option value="Other">Other</option> */}
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="orientation">Orientation:</label>
+          <select
+            id="orientation"
+            value={orientation}
+            onChange={(e) => setOrientation(e.target.value)}
+            required
+          >
+            <option value="">Select Orientation</option>
+            <option value="Heterosexual">Straight</option>
+            <option value="Homosexual">Bi</option>
+            <option value="Bisexual">Gay</option>
+            {/* <option value="Heterosexual">Heterosexual</option>
+            <option value="Homosexual">Homosexual</option>
+            <option value="Bisexual">Bisexual</option>
+            <option value="Pansexual">Pansexual</option>
+            <option value="Asexual">Asexual</option> */}
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="city">City:</label>
+          <select
+            id="city"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            required
+          >
+            <option value="">Select City</option>
+            <option value="New York">Moscow</option>
+            <option value="Los Angeles">Rome</option>
+            <option value="London">New York</option>
+            {/* <option value="New York">New York</option>
+            <option value="Los Angeles">Los Angeles</option>
+            <option value="London">London</option>
+            <option value="Paris">Paris</option>
+            <option value="Tokyo">Tokyo</option> */}
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="bio">Bio:</label>
+          <textarea
+            id="bio"
+            value={bio}
+            placeholder='Enter your Bio'
+            onChange={(e) => setBio(e.target.value)}
+          ></textarea>
+        </div>
+        {error && <p className="error">{error}</p>}
+        <div className="form-group-center">
+          <button type="submit">Start Search</button>
+        </div>
+      </form>
+    </div>
+  );
 }
 
-export default RegistrationForm
+export default RegistrationPage;
