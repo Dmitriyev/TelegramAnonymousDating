@@ -79,4 +79,36 @@ namespace handlers {
         resp = toResponse(resultJson);
         callback(resp);
     }
+
+    void StartHanler(
+        db_adapter::TPostgreSQLAdapter& adapter,
+        const drogon::HttpRequestPtr& req,
+        std::function<void(const drogon::HttpResponsePtr&)>&& callback,
+        const std::string& userId
+    ) {
+        auto resp = HttpResponse::newHttpResponse();
+
+        TUserId userIdUInt = 0;
+        try {
+            userIdUInt = std::stoull(userId);
+        } catch (const std::exception& e) {
+            LOG_ERROR << "Canot parse userId " << userId;
+            resp->setCustomStatusCode(400);
+            callback(resp);
+            return;
+        }
+
+        const auto userExists = adapter.IsUserRegistred(userIdUInt);
+        if (!userExists.has_value()) {
+            LOG_ERROR << "Canot check account existance " << userId;
+            resp->setCustomStatusCode(500);
+            callback(resp);
+            return;
+        }
+
+        Json::Value result;
+        result["user_registred"] = userExists.value();
+        resp = toResponse(result);
+        callback(resp);
+    }
 }

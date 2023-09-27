@@ -25,4 +25,11 @@ namespace handlers {
         std::function<void(const drogon::HttpResponsePtr&)>&& callback,
         const std::string& userId
     );
+
+    void StartHanler(
+        db_adapter::TPostgreSQLAdapter& adapter,
+        const drogon::HttpRequestPtr& req,
+        std::function<void(const drogon::HttpResponsePtr&)>&& callback,
+        const std::string& userId
+    );
 }
