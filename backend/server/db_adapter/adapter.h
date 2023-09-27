@@ -20,6 +20,7 @@ namespace db_adapter {
 
         bool InsertUserData(const common::TUser& user);
         bool UpdateUserData(const common::TUser& user);
+        std::optional<common::TUser> GetAccountInfo(common::TUserId userId);
 
     private:
         pqxx::connection Connection;

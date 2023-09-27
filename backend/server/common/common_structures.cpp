@@ -42,6 +42,15 @@ namespace {
 
         return it->second;
     }
+
+    // Json field fields 
+    static const std::string IdKey = "id";
+    static const std::string NameKey = "name";
+    static const std::string AgeKey = "age";
+    static const std::string SexKey = "sex";
+    static const std::string OrientationKey = "orientation";
+    static const std::string CityKey = "city";
+    static const std::string BioKey = "bio";
 }
 
 namespace common {
@@ -50,18 +59,31 @@ namespace common {
     std::optional<TUser> ExtractUserDataFromJson(const Json::Value& json) {
         try {
             TUser user {
-                .Id = GetUIValueFromJson(json, "id"),
-                .Name = GetStringValueFromJson(json, "name"),
-                .Age = GetUIValueFromJson(json, "age"),
-                .Sex = ConvertStringToIntCode(GetStringValueFromJson(json, "sex"), TNumericCodeTypes::Sex),
-                .Orientation =  ConvertStringToIntCode(GetStringValueFromJson(json, "orientation"), TNumericCodeTypes::Orientation),
-                .City = GetStringValueFromJson(json, "city"),
-                .Bio = GetStringValueFromJson(json, "bio"),
+                .Id = GetUIValueFromJson(json, IdKey),
+                .Name = GetStringValueFromJson(json, NameKey),
+                .Age = GetUIValueFromJson(json, AgeKey),
+                .Sex = ConvertStringToIntCode(GetStringValueFromJson(json, SexKey), TNumericCodeTypes::Sex),
+                .Orientation =  ConvertStringToIntCode(GetStringValueFromJson(json, OrientationKey), TNumericCodeTypes::Orientation),
+                .City = GetStringValueFromJson(json, CityKey),
+                .Bio = GetStringValueFromJson(json, BioKey),
             };
             return user;
         } catch (const std::exception& e) {
             LOG_ERROR << e.what();
             return std::nullopt;
         }
+    }
+
+    Json::Value SerializeUserDataToJson(const TUser& userData) {
+        Json::Value result;
+        result[IdKey] = userData.Id;
+        result[NameKey] = userData.Name;
+        result[AgeKey] = userData.Age;
+        result[SexKey] = userData.Sex;
+        result[OrientationKey] = userData.Orientation;
+        result[CityKey] = userData.City;
+        result[BioKey] = userData.Bio;
+
+        return result;
     }
 }

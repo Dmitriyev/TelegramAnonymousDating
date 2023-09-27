@@ -71,5 +71,8 @@ Json fields:
 
 ### /edit\_account
 
-Edits user account. Parameter are same as in the [/register](#-/register) header
+Edits user account. Parameter are same as in the [/register](#-/register) header. Implements POST method with json body.\
 
+### account\_info\?user\_id\=
+
+Returns account info. Implements GET method. Returns json with keys described in [/register](#-/register) method
