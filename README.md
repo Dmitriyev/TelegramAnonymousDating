@@ -73,6 +73,15 @@ Json fields:
 
 Edits user account. Parameter are same as in the [/register](#-/register) header. Implements POST method with json body.\
 
-### account\_info\?user\_id\=
+### /account\_info\?user\_id\=\<id\>
 
 Returns account info. Implements GET method. Returns json with keys described in [/register](#-/register) method
+
+### /start\?user\_id\=\<id\>
+
+Checks is user registred in app. Returns json with following format:\
+```
+{
+    "user_registred": <true/false>
+}
+```

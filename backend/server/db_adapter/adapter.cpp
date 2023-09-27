@@ -97,6 +97,25 @@ namespace db_adapter {
         }
     }
 
+    std::optional<bool> TPostgreSQLAdapter::IsUserRegistred(TUserId userId) {
+        pqxx::work work(Connection);
+        try {
+            std::stringstream selectCommand;
+            selectCommand << "SELECT EXISTS(SELECT 1 FROM " << TableNames.UsersTable << " WHERE id = " << userId << ");";
+            const auto res = work.exec(selectCommand.str());
+
+            if (res.size() != 1 || res[0].size() != 1) {
+                LOG_ERROR << "Unknown error while chcking existance of user id=" << userId << " in table " << TableNames.UsersTable;
+                return std::nullopt;
+            }
+
+            return res[0][0].as<bool>();
+        } catch (const std::exception& e) {
+            LOG_ERROR << "Canot read user data from table " << TableNames.UsersTable << ". " << e.what();
+            return std::nullopt;
+        }
+    }
+
     std::optional<TPostgreSQLAdapterPtr> MakePostgeSQLAdapter(
         const std::string& host, 
         const std::string& dbName,
