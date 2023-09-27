@@ -22,7 +22,7 @@ namespace config {
 
         if (!parseFromStream(builder, fileStream, &configJson, &errors)) {
             LOG_ERROR << "Canot parse config file " << configPath.string();
-            return {};
+            return std::nullopt;
         }
 
         try {
@@ -39,7 +39,7 @@ namespace config {
             return config;
         } catch (const std::exception& e) {
             LOG_ERROR << e.what();
-            return {};
+            return std::nullopt;
         }
     }
 }

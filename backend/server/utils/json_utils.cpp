@@ -19,7 +19,7 @@ namespace utils {
 
         if (!config[key].isString()) {
             std::stringstream errorMessage;
-            errorMessage << key << " field must have sting type";
+            errorMessage << key << " field must have string type";
             throw std::runtime_error(errorMessage.str());
         }
 

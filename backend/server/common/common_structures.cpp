@@ -61,7 +61,7 @@ namespace common {
             return user;
         } catch (const std::exception& e) {
             LOG_ERROR << e.what();
-            return {};
+            return std::nullopt;
         }
     }
 }

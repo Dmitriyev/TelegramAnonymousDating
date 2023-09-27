@@ -48,7 +48,7 @@ namespace db_adapter {
             return std::make_unique<TPostgreSQLAdapter>(coonectionOptions.str(), tableNames);
         } catch (const std::exception &e) {
             LOG_ERROR << e.what();
-            return {};
+            return std::nullopt;
         }
     }
 }
