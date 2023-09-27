@@ -54,6 +54,14 @@ int main(int argc, char *argv[]) {
         {Post}
     );
 
+    app().registerHandler(
+        "/account_info?user_id={user-id}",
+        [&postgesqlAdapter](const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback, const std::string& userId) {
+            AccountInfoHandler(*postgesqlAdapter.value(), req, std::move(callback), userId);
+        },
+        {Get}
+    );
+
     LOG_INFO << "Server running on 127.0.0.1:8848";
     app().addListener(config.value().ServerHost, config.value().ServerPort).run();
 }

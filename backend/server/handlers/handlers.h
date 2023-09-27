@@ -22,6 +22,7 @@ namespace handlers {
     void AccountInfoHandler(
         db_adapter::TPostgreSQLAdapter& adapter,
         const drogon::HttpRequestPtr& req,
-        std::function<void(const drogon::HttpResponsePtr&)>&& callback
+        std::function<void(const drogon::HttpResponsePtr&)>&& callback,
+        const std::string& userId
     );
 }
