@@ -11,7 +11,7 @@ set(SERVER_SOURCE_DIR ${PROJECT_SOURCE_DIR}/server)
 set(HANDLERS_SOURCE_DIR ${SERVER_SOURCE_DIR}/handlers)
 
 set(HANDLERS_SOURCES 
-	${HANDLERS_SOURCE_DIR}/register.cpp
+	${HANDLERS_SOURCE_DIR}/account.cpp
 )
 
 file(COPY_FILE ${SERVER_SOURCE_DIR}/config/conf.json ${CMAKE_BINARY_DIR}/conf_template.json)

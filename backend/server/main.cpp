@@ -41,9 +41,18 @@ int main(int argc, char *argv[]) {
     app().registerHandler(
         "/register",
         [&postgesqlAdapter](const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback) {
-            RegisterHandler(*postgesqlAdapter.value(), req, std::move(callback));
+            AccountHandler(*postgesqlAdapter.value(), req, std::move(callback), TAccountAction::Create);
         },
-        {Post});
+        {Post}
+    );
+
+    app().registerHandler(
+        "/edit_account",
+        [&postgesqlAdapter](const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback) {
+            AccountHandler(*postgesqlAdapter.value(), req, std::move(callback), TAccountAction::Update);
+        },
+        {Post}
+    );
 
     LOG_INFO << "Server running on 127.0.0.1:8848";
     app().addListener(config.value().ServerHost, config.value().ServerPort).run();

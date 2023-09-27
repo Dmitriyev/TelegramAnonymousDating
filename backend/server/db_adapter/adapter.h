@@ -18,7 +18,8 @@ namespace db_adapter {
     public:
         TPostgreSQLAdapter(const std::string& connectionOptions, const TTableNames& tableNames);
 
-        bool WriteUserData(const common::TUser& user, bool rewriteRow = false);
+        bool InsertUserData(const common::TUser& user);
+        bool UpdateUserData(const common::TUser& user);
 
     private:
         pqxx::connection Connection;
