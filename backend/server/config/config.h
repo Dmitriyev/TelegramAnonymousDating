@@ -10,6 +10,7 @@ namespace config {
         uint32_t ServerPort = 0;
 
         std::string PostgreSQLHost;
+        std::string PostgreSQLPort;
         std::string PostgreSQLDB;
         std::string PostgreSQLUsersTable;
         std::string PostgreSQLUser;

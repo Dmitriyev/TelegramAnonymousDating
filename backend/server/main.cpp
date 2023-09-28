@@ -27,6 +27,7 @@ int main(int argc, char *argv[]) {
 
     auto postgesqlAdapter = MakePostgeSQLAdapter(
         config.value().PostgreSQLHost,
+        config.value().PostgreSQLPort,
         config.value().PostgreSQLDB,
         config.value().PostgreSQLUser,
         config.value().PostgreSQLPassword,
