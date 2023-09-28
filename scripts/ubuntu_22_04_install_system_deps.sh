@@ -1,3 +1,6 @@
+apt install cmake
+apt install build-essential
+
 apt install libjsoncpp-dev
 ln -s /usr/include/jsoncpp/json/ /usr/include/json
 

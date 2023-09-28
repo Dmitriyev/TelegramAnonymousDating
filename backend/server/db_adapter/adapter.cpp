@@ -117,14 +117,15 @@ namespace db_adapter {
     }
 
     std::optional<TPostgreSQLAdapterPtr> MakePostgeSQLAdapter(
-        const std::string& host, 
+        const std::string& host,
+        const std::string& port, 
         const std::string& dbName,
         const std::string& user,
         const std::string& password,
         const TTableNames& tableNames
     ) {
         std::stringstream coonectionOptions;
-        coonectionOptions << "host=" << host << " dbname=" << dbName << " user=" << user << " password=" << password;
+        coonectionOptions << "host=" << host << " port=" << port << " dbname=" << dbName << " user=" << user << " password=" << password;
         try {
             return std::make_unique<TPostgreSQLAdapter>(coonectionOptions.str(), tableNames);
         } catch (const std::exception &e) {
