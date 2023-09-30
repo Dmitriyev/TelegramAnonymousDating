@@ -16,6 +16,30 @@ function RegistrationPage() {
   const [telegramId, setTelegramId] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
 
+  useEffect(() => {
+    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
+      const initDataUnsafeContent = JSON.stringify(window.Telegram.WebApp.initDataUnsafe);
+
+      const initDataUnsafeField = document.getElementById('initDataUnsafe');
+
+      if (initDataUnsafeField) {
+        initDataUnsafeField.value = initDataUnsafeContent;
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData) {
+      const initDataContent = JSON.stringify(window.Telegram.WebApp.initData);
+
+      const initDataField = document.getElementById('initData');
+      
+      if (initDataField) {
+        initDataField.value = initDataContent;
+      }
+    }
+  }, []);
+
 
   const [isDarkTheme, setIsDarkTheme] = useState(false); // Check dark theme
 
@@ -41,11 +65,9 @@ function RegistrationPage() {
         setError('Name should not exceed 20 characters.');
         return false;
       }
-      
-      // Если имя прошло валидацию
-      setError('');
-      setName(trimmedName); // Устанавливаем очищенное значение имени
-      return true;
+    setError('');
+    setName(trimmedName);
+    return true;
     };
 
   const validateAge = (inputAge) => {
@@ -58,19 +80,6 @@ function RegistrationPage() {
     }
   };
   
-  const extractTelegramData = () => {
-    const initData = window.TelegramWebApp?.initData;
-
-    if (initData) {
-      const telegramId = initData.telegramId;
-      setTelegramId(telegramId);
-    }
-  };
-
-  useEffect(() => {
-    extractTelegramData();
-  }, []);
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setSelectedFile(file);
@@ -233,6 +242,12 @@ const uploadPhotoAndGetUrl = () => {
             onChange={(e) => setBio(e.target.value)}
           />
         </div>
+        <div className="form-group">
+            <input id="initData" type="text" />
+        </div>
+        <div className="form-group">
+            <input id="initDataUnsafe" type="text" />
+         </div>
         {error && <p className="error">{error}</p>}
         <div className="form-group center">
           <button type="submit" className="start-search-button">
