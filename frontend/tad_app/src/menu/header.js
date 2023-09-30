@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './registrationForm.js'
 function Header() {
     const [telegramId, setTelegramId] = useState('');
 
@@ -19,4 +20,3 @@ function Header() {
     // )
 }
 export default Header;
-
