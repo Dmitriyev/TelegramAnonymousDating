@@ -5,9 +5,11 @@ project(server)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_subdirectory(${PROJECT_SOURCE_DIR}/thirdparty/drogon)
+set(SERVER_ROOT_DIR ${PROJECT_SOURCE_DIR}/..)
 
-set(SERVER_SOURCE_DIR ${PROJECT_SOURCE_DIR}/server)
+add_subdirectory(${SERVER_ROOT_DIR}/thirdparty/drogon build)
+
+set(SERVER_SOURCE_DIR ${SERVER_ROOT_DIR}/server)
 set(HANDLERS_SOURCE_DIR ${SERVER_SOURCE_DIR}/handlers)
 
 set(HANDLERS_SOURCES 
