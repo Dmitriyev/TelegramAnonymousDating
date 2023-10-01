@@ -71,6 +71,6 @@ int main(int argc, char *argv[]) {
         {Get}
     );
 
-    LOG_INFO << "Server running on 127.0.0.1:8848";
+    LOG_INFO << "Server running on " << config.value().ServerHost << ":" << config.value().ServerPort;
     app().addListener(config.value().ServerHost, config.value().ServerPort).run();
 }
