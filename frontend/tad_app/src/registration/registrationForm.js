@@ -1,26 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import './style.css';
-import { authToken } from './header.js';
-
+import React, { useState, useEffect } from "react";
+import "./style.css";
+import { authToken } from "./header.js";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function RegistrationPage() {
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
-  const [gender, setGender] = useState('');
-  const [orientation, setOrientation] = useState('');
-  const [city, setCity] = useState('');
-  const [bio, setBio] = useState('');
-  const [error, setError] = useState('');
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [orientation, setOrientation] = useState("");
+  const [city, setCity] = useState("");
+  const [bio, setBio] = useState("");
+  const [error, setError] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const [telegramId, setTelegramId] = useState('');
-  const [photoUrl, setPhotoUrl] = useState('');
+  const [telegramId, setTelegramId] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("");
+  // function BackToTelegram() {
+  //   const handleBackToTelegram = () => {
+  //     window.close();
+  //   };
+  // }
 
   useEffect(() => {
-    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) {
-      const initDataUnsafeContent = JSON.stringify(window.Telegram.WebApp.initDataUnsafe);
+    if (
+      window.Telegram &&
+      window.Telegram.WebApp &&
+      window.Telegram.WebApp.initDataUnsafe
+    ) {
+      const initDataUnsafeContent = JSON.stringify(
+        window.Telegram.WebApp.initDataUnsafe
+      );
 
-      const initDataUnsafeField = document.getElementById('initDataUnsafe');
+      const initDataUnsafeField = document.getElementById("initDataUnsafe");
 
       if (initDataUnsafeField) {
         initDataUnsafeField.value = initDataUnsafeContent;
@@ -29,17 +40,20 @@ function RegistrationPage() {
   }, []);
 
   useEffect(() => {
-    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData) {
+    if (
+      window.Telegram &&
+      window.Telegram.WebApp &&
+      window.Telegram.WebApp.initData
+    ) {
       const initDataContent = JSON.stringify(window.Telegram.WebApp.initData);
 
-      const initDataField = document.getElementById('initData');
-      
+      const initDataField = document.getElementById("initData");
+
       if (initDataField) {
         initDataField.value = initDataContent;
       }
     }
   }, []);
-
 
   const [isDarkTheme, setIsDarkTheme] = useState(false); // Check dark theme
 
@@ -47,7 +61,7 @@ function RegistrationPage() {
     // Check dark theme is active
     if (
       window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches
+      window.matchMedia("(prefers-color-scheme: dark)").matches
     ) {
       setIsDarkTheme(true);
     }
@@ -57,54 +71,56 @@ function RegistrationPage() {
     const trimmedName = inputName.trim();
     const nameRegex = /^[A-Za-z\s]+$/;
     if (!nameRegex.test(trimmedName)) {
-        setError('Name should contain only letters and spaces.');
-        return false;
-      }
-      
-      if (trimmedName.length > 20) {
-        setError('Name should not exceed 20 characters.');
-        return false;
-      }
-    setError('');
+      setError("Name should contain only letters and spaces.");
+      return false;
+    }
+
+    if (trimmedName.length > 20) {
+      setError("Name should not exceed 20 characters.");
+      return false;
+    }
+    setError("");
     setName(trimmedName);
     return true;
-    };
+  };
 
   const validateAge = (inputAge) => {
     if (/^\d+$/.test(inputAge) && inputAge.length <= 2) {
-      setError('');
+      setError("");
       return true;
     } else {
-      setError('Age must consist of numbers only and no more than 2 characters');
+      setError(
+        "Age must consist of numbers only and no more than 2 characters"
+      );
       return false;
     }
   };
-  
+
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     setSelectedFile(file);
   };
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     if (!selectedFile) {
-//       setError('Please upload your photo');
-//       return;
-//     }
-//     if (validateName(name) && validateAge(age) && !error) {
-//       console.log('Data sent to server:', name, age, gender, orientation, city, bio);
-//       if (selectedFile) {
-//         console.log('Upload photo:', selectedFile);
-//       }
-//     }
-//   };
+  //   const handleSubmit = (e) => {
+  //     e.preventDefault();
+  //     if (!selectedFile) {
+  //       setError('Please upload your photo');
+  //       return;
+  //     }
+  //     if (validateName(name) && validateAge(age) && !error) {
+  //       console.log('Data sent to server:', name, age, gender, orientation, city, bio);
+  //       if (selectedFile) {
+  //         console.log('Upload photo:', selectedFile);
+  //       }
+  //     }
+  //   };
 
-const uploadPhotoAndGetUrl = () => {
+  const uploadPhotoAndGetUrl = () => {
     const formData = new FormData();
-    formData.append('photo', selectedFile);
+    formData.append("photo", selectedFile);
 
-    fetch('uploadphoto/api/228', {
-      method: 'POST',
+    fetch("uploadphoto/api/228", {
+      method: "POST",
       body: formData,
     })
       .then((response) => response.json())
@@ -114,7 +130,7 @@ const uploadPhotoAndGetUrl = () => {
         }
       })
       .catch((error) => {
-        console.error('error upload:', error);
+        console.error("error upload:", error);
       });
   };
 
@@ -129,132 +145,242 @@ const uploadPhotoAndGetUrl = () => {
           orientation: orientation,
           city: city,
           bio: bio,
-          telegramId: telegramId, 
-          photoUrl: photoUrl, 
+          telegramId: telegramId,
+          photoUrl: photoUrl,
         };
 
-        fetch('register/api/228', {
-          method: 'POST',
+        fetch("register/api/228", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify(userData),
         })
           .then((response) => {
             if (response.status === 200) {
-              console.log('200');
+              console.log("200");
             } else {
-              console.error('400');
+              console.error("400");
             }
           })
           .catch((error) => {
-            console.error('error:', error);
+            console.error("error:", error);
           });
       } else {
-        setError('500');
+        setError("500");
       }
     }
   };
 
   return (
-    <div className={`registration-page ${isDarkTheme ? 'dark-theme' : ''}`}>
-      {/* <div className="back-button">
-        <button>Back</button>
-      </div> */}
-      <h1>Welcome</h1>
-      <label htmlFor="file" className="upload-button">
-        Choose Your Photo
-        <input
-          type="file"
-          id="file"
-          accept="image/*"
-          style={{ display: 'none' }}
-          onChange={handleFileChange}
-        />
-      </label>
-      <div className="image-preview">
-        {selectedFile ? (
-          <img src={URL.createObjectURL(selectedFile)} alt="Profile" />
-        ) : (
-          <div className="placeholder">Preview</div>
-        )}
-      </div>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="Name">Name</label>
-          <input
-            type="text"
-            id="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="Age">Age</label>
-          <input
-            type="number"
-            id="Age"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-          />
-        </div>
-        <script src="https://telegram.org/js/telegram-web-app.js"></script>
-        <div className="form-group">
-          <label htmlFor="Gender">Gender</label>
-          <select id="Gender" value={gender} onChange={(e) => setGender(e.target.value)}>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            {/* <option value="Other">Other</option>
+    <div className="index">
+      <div className="overlap-group-wrapper">
+        <div className="overlap-group">
+          <div className="overlap">
+            <img
+              className="polygon"
+              alt="Polygon"
+              src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/polygon-1-2@2x.png"
+            />
+            <p className="TELEGRAM">
+              <span className="text-wrapper">Back to Telegram</span>
+            </p>
+          </div>
+          <div className="div">
+            <div className="rectangle" />
+            <p className="span-wrapper">
+              <label htmlFor="file" className="span">
+                <p className="button-text">Choose Your Photo</p>
+                <input
+                  type="file"
+                  id="file"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                />
+              </label>
+            </p>
+          </div>
+          <div className="overlap-2"> 
+  {selectedFile ? ( 
+    <img className="element-1" src={URL.createObjectURL(selectedFile)} alt="Profile" /> 
+  ) : ( 
+    <div className="ellipse">
+      <img 
+    className="element" 
+    alt="Element" 
+    src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/-------1-2-1@2x.png" 
+  /> 
+    </div> 
+  )} 
+</div>
+          <div className="overlap-3">
+            <p className="p">
+              <span className="text-wrapper-2">Fill in all the fields</span>
+            </p>
+            <p className="span-wrapper-2">
+              <span className="text-wrapper-3">Name</span>
+            </p>
+            <p className="span-wrapper-3">
+              <span className="text-wrapper-4">
+                <label htmlFor="Name">
+                  <input
+                    type="text"
+                    id="Name"
+                    value={name}
+                    placeholder="Enter your Name"
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                </label>
+              </span>
+            </p>
+            <img
+              className="line"
+              alt="Line"
+              src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
+            />
+            <p className="span-wrapper-4">
+              <span className="text-wrapper-3">Age</span>
+            </p>
+            <p className="element-2">
+              <span className="text-wrapper-4">
+                <label htmlFor="Age">
+                  {" "}
+                  <input
+                    type="number"
+                    id="Age"
+                    value={age}
+                    placeholder="Enter your Age"
+                    onChange={(e) => setAge(e.target.value)}
+                  />
+                </label>
+              </span>
+            </p>
+            <img
+              className="img"
+              alt="Line"
+              src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
+            />
+            <p className="span-wrapper-5">
+              <span className="text-wrapper-3">Gender</span>
+            </p>
+            <p className="span-wrapper-6">
+              <span className="text-wrapper-4">
+                <label htmlFor="Gender">
+                  <select
+                    placeholder="Select your Gender"
+                    id="Gender"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                    className="select-border"
+                  >
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    {/* <option value="Other">Other</option>
             <option value="Prefer not to say">Prefer not to say</option>
             <option value="Non-binary">Non-binary</option> */}
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="Orientation">Orientation</label>
-          <select
-            id="Orientation"
-            value={orientation}
-            onChange={(e) => setOrientation(e.target.value)}
-          >
-            <option value="Straight">Straight</option>
-            <option value="Gay">Gay</option>
-            {/* <option value="Lesbian">Lesbian</option> */}
-            <option value="Bisexual">Bisexual</option>
-            {/* <option value="Other">Other</option> */}
-          </select>
-        </div>
-        <div className="form-group">
-          <label htmlFor="City">City</label>
-          <select id="City" value={city} onChange={(e) => setCity(e.target.value)}>
-            <option value="New York">New York</option>
-            <option value="Los Angeles">Moscow</option>
-            <option value="Chicago">Rome</option>
-            {/* <option value="San Francisco">San Francisco</option>
+                  </select>
+                </label>
+              </span>
+            </p>
+            <img
+              className="line-2"
+              alt="Line"
+              src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
+            />
+            <p className="span-wrapper-7">
+              <span className="text-wrapper-3">Orientation</span>
+            </p>
+            <p className="span-wrapper-8">
+              <span className="text-wrapper-4">
+                <label htmlFor="Orientation">
+                  <select
+                    placeholder="Select your orientation"
+                    id="Orientation"
+                    value={orientation}
+                    onChange={(e) => setOrientation(e.target.value)}
+                    className="select-border"
+                  >
+                    <option value="Straight">Straight</option>
+                    <option value="Gay">Gay</option>
+                    {/* <option value="Lesbian">Lesbian</option> */}
+                    <option value="Bisexual">Bisexual</option>
+                    {/* <option value="Other">Other</option> */}
+                  </select>
+                </label>
+              </span>
+            </p>
+            <img
+              className="line-3"
+              alt="Line"
+              src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
+            />
+            <p className="span-wrapper-9">
+              <span className="text-wrapper-3">City</span>
+            </p>
+            <p className="span-wrapper-10">
+              <span className="text-wrapper-4">
+                <label htmlFor="City">
+                  <select
+                    placeholder="Select your City"
+                    id="City"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                    className="select-border"
+                  >
+                    <option value="New York">New York</option>
+                    <option value="Los Angeles">Moscow</option>
+                    <option value="Chicago">Rome</option>
+                    {/* <option value="San Francisco">San Francisco</option>
             <option value="Miami">Miami</option> */}
-          </select>
+                  </select>
+                </label>
+              </span>
+            </p>
+            <img
+              className="line-4"
+              alt="Line"
+              src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
+            />
+            <p className="span-wrapper-11">
+              <span className="text-wrapper-3">Bio</span>
+            </p>
+            <p className="span-wrapper-12">
+              <span className="text-wrapper-4">
+                <label htmlFor="Bio">
+                  <textarea
+                    id="Bio"
+                    placeholder="Enter your Bio"
+                    value={bio}
+                    onChange={(e) => setBio(e.target.value)}
+                    className="text-area"
+                  />
+                </label>
+
+                <br />
+              </span>
+            </p>
+            <img
+              className="line-5"
+              alt="Line"
+              src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
+            />
+          </div>
+          <div className="overlap-4">
+            <div className="rectangle-2" />
+            <p className="span-wrapper-13">
+              {error && <p className="error">{error}</p>}
+              <p className="span-wrapper">
+                <label htmlFor="submit" className="span">
+                  <p className="button-text-1" onClick={handleSubmit}>
+                    Start Search
+                  </p>
+                </label>
+              </p>
+            </p>
+          </div>
         </div>
-        <div className="form-group">
-          <label htmlFor="Bio">Bio</label>
-          <textarea
-            id="Bio"
-            placeholder='Enter your Bio'
-            value={bio}
-            onChange={(e) => setBio(e.target.value)}
-          />
-        </div>
-        <div className="form-group">
-            <input id="initData" type="text" />
-        </div>
-        <div className="form-group">
-            <input id="initDataUnsafe" type="text" />
-         </div>
-        {error && <p className="error">{error}</p>}
-        <div className="form-group center">
-          <button type="submit" className="start-search-button">
-            Start Search
-          </button>
-        </div>
-      </form>
+      </div>
     </div>
   );
 }
