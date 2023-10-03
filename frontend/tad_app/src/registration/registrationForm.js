@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
 import { authToken } from "./header.js";
+import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function RegistrationPage() {
@@ -174,214 +175,214 @@ function RegistrationPage() {
 
   return (
     <div className="index">
-      <div className="overlap-group-wrapper">
-        <div className="overlap-group">
-          <div className="overlap">
-            <img
-              className="polygon"
-              alt="Polygon"
-              src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/polygon-1-2@2x.png"
-            />
-            <p className="TELEGRAM">
-              <span className="text-wrapper">Back to Telegram</span>
-            </p>
-          </div>
-          <div className="div">
-            <div className="rectangle" />
-            <p className="span-wrapper">
-              <label htmlFor="file" className="span">
-                <p className="button-text">Choose Your Photo</p>
+    <div className="overlap-group-wrapper">
+      <div className="overlap-group">
+        <div className="overlap">
+          <img
+            className="polygon"
+            alt="Polygon"
+            src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/polygon-1-2@2x.png"
+          />
+          <p className="TELEGRAM">
+            <span className="text-wrapper">Back to Telegram</span>
+          </p>
+        </div>
+        <div className="div">
+          <div className="rectangle" />
+          <p className="span-wrapper">
+            <label htmlFor="file" className="span">
+              <p className="button-text">Choose Your Photo</p>
+              <input
+                type="file"
+                id="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={handleFileChange}
+              />
+            </label>
+          </p>
+        </div>
+        <div className="overlap-2"> 
+{selectedFile ? ( 
+  <img className="element-1" src={URL.createObjectURL(selectedFile)} alt="Profile" /> 
+) : ( 
+  <div className="ellipse">
+    <img 
+  className="element" 
+  alt="Element" 
+  src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/-------1-2-1@2x.png" 
+/> 
+  </div> 
+)} 
+</div>
+        <div className="overlap-3">
+          <p className="p">
+            <span className="text-wrapper-2">Fill in all the fields</span>
+          </p>
+          <p className="span-wrapper-2">
+            <span className="text-wrapper-3">Name</span>
+          </p>
+          <p className="span-wrapper-3">
+            <span className="text-wrapper-4">
+              <label htmlFor="Name">
                 <input
-                  type="file"
-                  id="file"
-                  accept="image/*"
-                  style={{ display: "none" }}
-                  onChange={handleFileChange}
+                  type="text"
+                  id="Name"
+                  value={name}
+                  placeholder="Enter your Name"
+                  onChange={(e) => setName(e.target.value)}
                 />
               </label>
-            </p>
-          </div>
-          <div className="overlap-2"> 
-  {selectedFile ? ( 
-    <img className="element-1" src={URL.createObjectURL(selectedFile)} alt="Profile" /> 
-  ) : ( 
-    <div className="ellipse">
-      <img 
-    className="element" 
-    alt="Element" 
-    src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/-------1-2-1@2x.png" 
-  /> 
-    </div> 
-  )} 
-</div>
-          <div className="overlap-3">
-            <p className="p">
-              <span className="text-wrapper-2">Fill in all the fields</span>
-            </p>
-            <p className="span-wrapper-2">
-              <span className="text-wrapper-3">Name</span>
-            </p>
-            <p className="span-wrapper-3">
-              <span className="text-wrapper-4">
-                <label htmlFor="Name">
-                  <input
-                    type="text"
-                    id="Name"
-                    value={name}
-                    placeholder="Enter your Name"
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                </label>
-              </span>
-            </p>
-            <img
-              className="line"
-              alt="Line"
-              src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
-            />
-            <p className="span-wrapper-4">
-              <span className="text-wrapper-3">Age</span>
-            </p>
-            <p className="element-2">
-              <span className="text-wrapper-4">
-                <label htmlFor="Age">
-                  {" "}
-                  <input
-                    type="number"
-                    id="Age"
-                    value={age}
-                    placeholder="Enter your Age"
-                    onChange={(e) => setAge(e.target.value)}
-                  />
-                </label>
-              </span>
-            </p>
-            <img
-              className="img"
-              alt="Line"
-              src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
-            />
-            <p className="span-wrapper-5">
-              <span className="text-wrapper-3">Gender</span>
-            </p>
-            <p className="span-wrapper-6">
-              <span className="text-wrapper-4">
-                <label htmlFor="Gender">
-                  <select
-                    placeholder="Select your Gender"
-                    id="Gender"
-                    value={gender}
-                    onChange={(e) => setGender(e.target.value)}
-                    className="select-border"
-                  >
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    {/* <option value="Other">Other</option>
-            <option value="Prefer not to say">Prefer not to say</option>
-            <option value="Non-binary">Non-binary</option> */}
-                  </select>
-                </label>
-              </span>
-            </p>
-            <img
-              className="line-2"
-              alt="Line"
-              src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
-            />
-            <p className="span-wrapper-7">
-              <span className="text-wrapper-3">Orientation</span>
-            </p>
-            <p className="span-wrapper-8">
-              <span className="text-wrapper-4">
-                <label htmlFor="Orientation">
-                  <select
-                    placeholder="Select your orientation"
-                    id="Orientation"
-                    value={orientation}
-                    onChange={(e) => setOrientation(e.target.value)}
-                    className="select-border"
-                  >
-                    <option value="Straight">Straight</option>
-                    <option value="Gay">Gay</option>
-                    {/* <option value="Lesbian">Lesbian</option> */}
-                    <option value="Bisexual">Bisexual</option>
-                    {/* <option value="Other">Other</option> */}
-                  </select>
-                </label>
-              </span>
-            </p>
-            <img
-              className="line-3"
-              alt="Line"
-              src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
-            />
-            <p className="span-wrapper-9">
-              <span className="text-wrapper-3">City</span>
-            </p>
-            <p className="span-wrapper-10">
-              <span className="text-wrapper-4">
-                <label htmlFor="City">
-                  <select
-                    placeholder="Select your City"
-                    id="City"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    className="select-border"
-                  >
-                    <option value="New York">New York</option>
-                    <option value="Los Angeles">Moscow</option>
-                    <option value="Chicago">Rome</option>
-                    {/* <option value="San Francisco">San Francisco</option>
-            <option value="Miami">Miami</option> */}
-                  </select>
-                </label>
-              </span>
-            </p>
-            <img
-              className="line-4"
-              alt="Line"
-              src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
-            />
-            <p className="span-wrapper-11">
-              <span className="text-wrapper-3">Bio</span>
-            </p>
-            <p className="span-wrapper-12">
-              <span className="text-wrapper-4">
-                <label htmlFor="Bio">
-                  <textarea
-                    id="Bio"
-                    placeholder="Enter your Bio"
-                    value={bio}
-                    onChange={(e) => setBio(e.target.value)}
-                    className="text-area"
-                  />
-                </label>
+            </span>
+          </p>
+          <img
+            className="line"
+            alt="Line"
+            src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
+          />
+          <p className="span-wrapper-4">
+            <span className="text-wrapper-3">Age</span>
+          </p>
+          <p className="element-2">
+            <span className="text-wrapper-4">
+              <label htmlFor="Age">
+                {" "}
+                <input
+                  type="number"
+                  id="Age"
+                  value={age}
+                  placeholder="Enter your Age"
+                  onChange={(e) => setAge(e.target.value)}
+                />
+              </label>
+            </span>
+          </p>
+          <img
+            className="img"
+            alt="Line"
+            src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
+          />
+          <p className="span-wrapper-5">
+            <span className="text-wrapper-3">Gender</span>
+          </p>
+          <p className="span-wrapper-6">
+            <span className="text-wrapper-4">
+              <label htmlFor="Gender">
+                <select
+                  placeholder="Select your Gender"
+                  id="Gender"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  className="select-border"
+                >
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  {/* <option value="Other">Other</option>
+          <option value="Prefer not to say">Prefer not to say</option>
+          <option value="Non-binary">Non-binary</option> */}
+                </select>
+              </label>
+            </span>
+          </p>
+          <img
+            className="line-2"
+            alt="Line"
+            src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
+          />
+          <p className="span-wrapper-7">
+            <span className="text-wrapper-3">Orientation</span>
+          </p>
+          <p className="span-wrapper-8">
+            <span className="text-wrapper-4">
+              <label htmlFor="Orientation">
+                <select
+                  placeholder="Select your orientation"
+                  id="Orientation"
+                  value={orientation}
+                  onChange={(e) => setOrientation(e.target.value)}
+                  className="select-border"
+                >
+                  <option value="Straight">Straight</option>
+                  <option value="Gay">Gay</option>
+                  {/* <option value="Lesbian">Lesbian</option> */}
+                  <option value="Bisexual">Bisexual</option>
+                  {/* <option value="Other">Other</option> */}
+                </select>
+              </label>
+            </span>
+          </p>
+          <img
+            className="line-3"
+            alt="Line"
+            src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
+          />
+          <p className="span-wrapper-9">
+            <span className="text-wrapper-3">City</span>
+          </p>
+          <p className="span-wrapper-10">
+            <span className="text-wrapper-4">
+              <label htmlFor="City">
+                <select
+                  placeholder="Select your City"
+                  id="City"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  className="select-border"
+                >
+                  <option value="New York">New York</option>
+                  <option value="Los Angeles">Moscow</option>
+                  <option value="Chicago">Rome</option>
+                  {/* <option value="San Francisco">San Francisco</option>
+          <option value="Miami">Miami</option> */}
+                </select>
+              </label>
+            </span>
+          </p>
+          <img
+            className="line-4"
+            alt="Line"
+            src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
+          />
+          <p className="span-wrapper-11">
+            <span className="text-wrapper-3">Bio</span>
+          </p>
+          <p className="span-wrapper-12">
+            <span className="text-wrapper-4">
+              <label htmlFor="Bio">
+                <textarea
+                  id="Bio"
+                  placeholder="Enter your Bio"
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  className="text-area"
+                />
+              </label>
 
-                <br />
-              </span>
+              <br />
+            </span>
+          </p>
+          <img
+            className="line-5"
+            alt="Line"
+            src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
+          />
+        </div>
+        <div className="overlap-4">
+          <div className="rectangle-2" />
+          <p className="span-wrapper-13">
+            {error && <p className="error">{error}</p>}
+            <p className="span-wrapper">
+              <label htmlFor="submit" className="span">
+                <p className="button-text-1" onClick={handleSubmit}>
+                  Start Search
+                </p>
+              </label>
             </p>
-            <img
-              className="line-5"
-              alt="Line"
-              src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
-            />
-          </div>
-          <div className="overlap-4">
-            <div className="rectangle-2" />
-            <p className="span-wrapper-13">
-              {error && <p className="error">{error}</p>}
-              <p className="span-wrapper">
-                <label htmlFor="submit" className="span">
-                  <p className="button-text-1" onClick={handleSubmit}>
-                    Start Search
-                  </p>
-                </label>
-              </p>
-            </p>
-          </div>
+          </p>
         </div>
       </div>
     </div>
+  </div>
   );
 }
 
