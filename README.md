@@ -53,7 +53,7 @@ For building server binary run
 
 #### Preparing server env
 
-1. Build script copies config file into ```bin_srver``` directory. Before running server process you should copy ```conf\_template.json``` file with different name for example ```conf.json``` (otherwise it wil be rewritten after rebuilding binaries). Than fill config section with your Postgresql, Redis and Telegram bot settings. 
+1. Build script copies config file into ```bin_server``` directory. Before running server process you should copy ```conf\_template.json``` file with different name for example ```conf.json``` (otherwise it wil be rewritten after rebuilding binaries). Than fill config section with your Postgresql, Redis and Telegram bot settings. 
 <details>
     
 <summary>Fields description</summary>
@@ -91,6 +91,38 @@ psql TAD -q -c "CREATE TABLE IF NOT EXISTS users (
 #### Run
 
 ```bin_server/server bin_server/conf.json```
+
+
+### Mds build & run
+#### Building
+
+For building mds binary run
+
+```
+./build_mds.sh
+```
+#### Preparing server env
+1. Create your own [aws object storage](https://aws.amazon.com/ru/what-is/object-storage/)
+2. Build script copies config file into ```bin_mds``` directory. Before running server process you should copy ```conf\_template.json``` file with different name for example ```conf.json``` (otherwise it wil be rewritten after rebuilding binaries). Than fill config section with your AWS object storage and Telegram bot settings. 
+<details>
+    
+<summary>Fields description</summary>
+
+```server_host - host to run server
+  server_port - port to run server
+  cloud_region - AWS storage region
+  cloud_endpoint - AWS storage endpoint
+  cloud_key_id - id of your service account
+  cloud_key - secret key of your service account
+  cloud_bucket - bucket name where media will store
+```
+
+</details>
+
+#### Run
+
+```bin_mds/server bin_mds/conf.json```
+
 
 # Server decription
 
