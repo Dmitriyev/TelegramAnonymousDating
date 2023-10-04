@@ -1,6 +1,6 @@
 # Server decription
 ## Code
-Source code kept in [backend/server](https://github.com/Dmitriyev/TelegramAnonymousDating/tree/main/backend/server) directory
+Source code kept in [backend/server](../backend/server) directory
 
 ## Handlers
 
