@@ -1,0 +1,9 @@
+{
+    "server_host": "0.0.0.0",
+    "server_port": 8000,
+    "cloud_region": "",
+    "cloud_endpoint": "",
+    "cloud_key_id": "",
+    "cloud_key": "",
+    "cloud_bucket": ""
+}
