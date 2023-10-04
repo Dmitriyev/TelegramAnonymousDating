@@ -9,7 +9,7 @@ There are 3 microservices in app:
 3. Frontend. Language: javascript + React
 
 App architecture diagram:
-
+![app architecture](/doc/media/arch.png)
 
 # Building server
 ## Installing dependencies
