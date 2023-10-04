@@ -11,38 +11,71 @@ There are 3 microservices in app:
 App architecture diagram:
 ![app architecture](/doc/media/arch.png)
 
-# Building server
-## Installing dependencies
+## Build & Run
+### Installing dependencies
+#### Backend (server + mds)
+
 Dependencies list:
 
 ```
-jsoncpp
-zlib
+cmake
+build-essential (For debian-based distrs. Also you can install g++ only)
+libjsoncpp-dev
+uuid-dev
+zlib1g-dev
 openssl
-libssl
+libssl-dev
+libpqxx-dev
+libcurl4-openssl-dev
+zlib1g-dev
+libssl-dev
+postgresql
+postgresql-contrib
 ```
 
-Ubuntu 22.04 users can use following command once:
+Ubuntu 22.04 users can run following script:
 
 ```
 sudo scripts/ubuntu_22_04_install_system_deps.sh
 ```
 
-## Build
+#### Frontend
+[ToDo avraam]
+
+### Server build & run
+#### Building
+
+For building server binary run
 
 ```
-./build.sh
+./build_server.sh
 ```
-Build script copies config file into bin directory. Before running server process you should copy ```conf\_template.json``` file with different name for example ```conf.json``` (otherwise it wil be rewritten after rebuilding binaries). Than fill ```postgresql_user``` and ```postgresql_password``` with correct credentials. 
 
-# Starting server
-- Start Postges database service ```sudo scripts/prepare_server_env.sh```
-- Create tables if needed\
+#### Preparing server env
+
+1. Build script copies config file into ```bin_srver``` directory. Before running server process you should copy ```conf\_template.json``` file with different name for example ```conf.json``` (otherwise it wil be rewritten after rebuilding binaries). Than fill config section with your Postgresql, Redis and Telegram bot settings. 
+<details>
+    
+<summary>Fields description</summary>
+
+```server_host - host to run server
+  server_port - port to run server
+  postgresql_host - host of PostgreSQL installation
+  postgresql_port - port of PostgreSQL installation
+  postgresql_db - database name
+  postgresql_user_table - name of table with user data
+  postgresql_user - PostgreSQL user
+  postgresql_password - PostgreSQL password
+```
+
+</details>
+
+2. Create PostgreSQL tables 
 Run postgres shell
 ```
 sudo -u postgres -i
 ```
-Then create tables
+Then create table
 ```
 createdb TAD
 psql TAD -q -c "CREATE TABLE IF NOT EXISTS users (
@@ -55,7 +88,9 @@ psql TAD -q -c "CREATE TABLE IF NOT EXISTS users (
     bio TEXT
 );"
 ```
-- Run ```bin/server conf.json```
+#### Run
+
+```bin_server/server bin_server/conf.json```
 
 # Server decription
 
