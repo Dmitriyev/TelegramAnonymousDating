@@ -53,7 +53,7 @@ For building server binary run
 
 #### Preparing server env
 
-1. Build script copies config file into ```bin_server``` directory. Before running server process you should copy ```conf\_template.json``` file with different name for example ```conf.json``` (otherwise it wil be rewritten after rebuilding binaries). Than fill config section with your Postgresql, Redis and Telegram bot settings. 
+1. Build script copies config file into ```bin_server``` directory. Before running server process you should copy ```conf_template.json``` file with different name for example ```conf.json``` (otherwise it wil be rewritten after rebuilding binaries). Than fill config section with your Postgresql, Redis and Telegram bot settings. 
 <details>
     
 <summary>Fields description</summary>
@@ -103,7 +103,7 @@ For building mds binary run
 ```
 #### Preparing server env
 1. Create your own [aws object storage](https://aws.amazon.com/ru/what-is/object-storage/)
-2. Build script copies config file into ```bin_mds``` directory. Before running server process you should copy ```conf\_template.json``` file with different name for example ```conf.json``` (otherwise it wil be rewritten after rebuilding binaries). Than fill config section with your AWS object storage and Telegram bot settings. 
+2. Build script copies config file into ```bin_mds``` directory. Before running server process you should copy ```conf_template.json``` file with different name for example ```conf.json``` (otherwise it wil be rewritten after rebuilding binaries). Than fill config section with your AWS object storage and Telegram bot settings. 
 <details>
     
 <summary>Fields description</summary>
