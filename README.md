@@ -1,6 +1,6 @@
 # TelegramAnonymousDating
 ## Overview
-Telegram mini app for contest. This app is a dating platform. Implements classic matching logic: when user A likes profile of user B, both of them get links to of each others Telegram profiles\
+Telegram mini app for contest. This app is a dating platform. Implements classic matching logic: when user A likes profile of user B, both of them get links to of each others Telegram profiles
 
 ## Application architecture
 There are 3 microservices in app:
