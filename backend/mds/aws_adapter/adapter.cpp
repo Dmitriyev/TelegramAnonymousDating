@@ -47,8 +47,6 @@ namespace aws_adapter {
             const std::string& userId
     ) {
         //ToDo: upload images converted into .webp format
-        //ToDo: check md5sum before uploading
-
         if (data.size() > 2 * 1024 * 1024) { // 2 Mb
             LOG_ERROR << "File is too big";
             return std::nullopt;
