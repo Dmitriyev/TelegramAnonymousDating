@@ -9,6 +9,7 @@ using namespace db_adapter;
 using namespace drogon;
 using namespace handlers;
 
+
 int main(int argc, char *argv[]) {
     if (argc != 2) {
         LOG_FATAL << "No config file specified\nUsage: ./server <config file>";

@@ -7,7 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(SERVER_ROOT_DIR ${PROJECT_SOURCE_DIR}/..)
 
-add_subdirectory(${SERVER_ROOT_DIR}/thirdparty/drogon build)
+add_subdirectory(${SERVER_ROOT_DIR}/thirdparty/drogon drogon)
+add_subdirectory(${SERVER_ROOT_DIR}/lib/utils utils)
 
 set(SERVER_SOURCE_DIR ${SERVER_ROOT_DIR}/server)
 set(HANDLERS_SOURCE_DIR ${SERVER_SOURCE_DIR}/handlers)
@@ -23,7 +24,6 @@ set(
     ${SERVER_SOURCE_DIR}/main.cpp
     ${SERVER_SOURCE_DIR}/config/config.cpp
     ${SERVER_SOURCE_DIR}/db_adapter/adapter.cpp
-    ${SERVER_SOURCE_DIR}/utils/json_utils.cpp
     ${SERVER_SOURCE_DIR}/common/common_structures.cpp 
     ${HANDLERS_SOURCES}
 )
@@ -32,5 +32,5 @@ add_executable(${PROJECT_NAME} ${SERVER_SOURCE_FILES})
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${SERVER_SOURCE_DIR})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE drogon pqxx)
+target_link_libraries(${PROJECT_NAME} PRIVATE drogon pqxx utils)
 
