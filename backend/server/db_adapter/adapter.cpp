@@ -7,6 +7,52 @@
 namespace {
     // Column names
     static const std::string IdCol = "id";
+
+    enum EColumnIndexes {
+        Id = 0,
+        Name,
+        Age,
+        Sex,
+        Orientation,
+        City,
+        Bio,
+        Avatars,
+    };
+
+    std::string StringVectorToPostgreSQLFormat(const std::vector<std::string>& stringVector) {
+        std::stringstream result;
+        result << "'{";
+
+        bool isFirst = true;
+        for (const auto& str: stringVector) {
+            if (!isFirst) {
+                result << ", ";
+            }
+
+            result << "\"" << str << "\"";
+            isFirst = false;
+        }
+        result << "}'";
+
+        return result.str();
+    }
+
+    std::vector<std::string> ConvertPQXXArrayToVector(const pqxx::row::reference& field) {
+        std::vector<std::string> result;
+        auto array = field.as_array();
+
+        std::pair<pqxx::array_parser::juncture, std::string> elem;
+        do
+        {
+            elem = array.get_next();
+            if (elem.first == pqxx::array_parser::juncture::string_value) {
+                result.push_back(elem.second);
+            }
+        }
+        while (elem.first != pqxx::array_parser::juncture::done);
+
+        return result;
+    }
 }
 
 namespace db_adapter {
@@ -29,7 +75,8 @@ namespace db_adapter {
                 user.Sex << ", " <<
                 user.Orientation << ", " <<
                 "'" << user.City << "', " <<
-                "'" << user.Bio << "');";
+                "'" << user.Bio << "', " <<
+                StringVectorToPostgreSQLFormat(user.Avatars) << ");";
 
             work.exec0(insertCommand.str());
             work.commit();
@@ -51,7 +98,8 @@ namespace db_adapter {
                 "sex = " << user.Sex << ", " <<
                 "orientation = " << user.Orientation << ", " <<
                 "city = '" << user.City << "', " <<
-                "bio = '" << user.Bio << "' " <<
+                "bio = '" << user.Bio << "', " <<
+                "avatars = " << StringVectorToPostgreSQLFormat(user.Avatars) << " " <<
                 "WHERE " << IdCol << " =  " << user.Id << ";";
 
             work.exec0(updateCommand.str());
@@ -81,14 +129,16 @@ namespace db_adapter {
             }
 
             const auto& row = res[0];
+
             TUser userData {
-                .Id = row[0].as<decltype(TUser::Id)>(),
-                .Name = row[1].as<decltype(TUser::Name)>(),
-                .Age = row[2].as<decltype(TUser::Age)>(),
-                .Sex = row[3].as<decltype(TUser::Sex)>(),
-                .Orientation =  row[4].as<decltype(TUser::Orientation)>(),
-                .City = row[5].as<decltype(TUser::City)>(),
-                .Bio = row[6].as<decltype(TUser::Bio)>(),
+                .Id = row[EColumnIndexes::Id].as<decltype(TUser::Id)>(),
+                .Name = row[EColumnIndexes::Name].as<decltype(TUser::Name)>(),
+                .Age = row[EColumnIndexes::Age].as<decltype(TUser::Age)>(),
+                .Sex = row[EColumnIndexes::Sex].as<decltype(TUser::Sex)>(),
+                .Orientation = row[EColumnIndexes::Orientation].as<decltype(TUser::Orientation)>(),
+                .City = row[EColumnIndexes::City].as<decltype(TUser::City)>(),
+                .Bio = row[EColumnIndexes::Bio].as<decltype(TUser::Bio)>(),
+                .Avatars = ConvertPQXXArrayToVector(row[EColumnIndexes::Avatars]),
             };
             return userData;
         } catch (const std::exception& e) {

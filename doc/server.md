@@ -21,6 +21,7 @@ Json fields:
 - orientation: string. Possible values: straight, bi, gay
 - city: string
 - bio: string
+- avatars: list of strings. Ids of user's avatars at [mds](./mds.md)
 
 ### /edit\_account
 

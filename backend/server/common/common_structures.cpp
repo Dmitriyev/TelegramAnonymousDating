@@ -51,6 +51,7 @@ namespace {
     static const std::string OrientationKey = "orientation";
     static const std::string CityKey = "city";
     static const std::string BioKey = "bio";
+    static const std::string AvatarsKey = "avatars";
 }
 
 namespace common {
@@ -66,6 +67,7 @@ namespace common {
                 .Orientation =  ConvertStringToIntCode(GetStringValueFromJson(json, OrientationKey), TNumericCodeTypes::Orientation),
                 .City = GetStringValueFromJson(json, CityKey),
                 .Bio = GetStringValueFromJson(json, BioKey),
+                .Avatars = GetStringVectorFromJson(json, AvatarsKey),
             };
             return user;
         } catch (const std::exception& e) {
@@ -83,6 +85,11 @@ namespace common {
         result[OrientationKey] = userData.Orientation;
         result[CityKey] = userData.City;
         result[BioKey] = userData.Bio;
+
+        Json::Value& avatars = result[AvatarsKey];
+        for (int i = 0; i < userData.Avatars.size(); ++i) {
+            avatars[i] = userData.Avatars[i];
+        }
 
         return result;
     }
