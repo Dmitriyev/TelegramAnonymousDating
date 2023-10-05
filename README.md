@@ -85,7 +85,8 @@ psql TAD -q -c "CREATE TABLE IF NOT EXISTS users (
     sex SMALLINT NOT NULL,
     orientation SMALLINT NOT NULL,
     city VARCHAR(50) NOT NULL,
-    bio TEXT
+    bio TEXT,
+    avatars text[] NOT NULL
 );"
 ```
 #### Run
@@ -99,7 +100,8 @@ psql TAD -q -c "CREATE TABLE IF NOT EXISTS users (
 For building mds binary run
 
 ```
-./build_mds.sh
+./build_mds.sh build_aws    # If you build mds first time. Builds thirdparty aws library
+./build_mds.sh              # instead
 ```
 #### Preparing server env
 1. Create your own [aws object storage](https://aws.amazon.com/ru/what-is/object-storage/)
