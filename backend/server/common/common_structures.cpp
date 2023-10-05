@@ -87,7 +87,7 @@ namespace common {
         result[BioKey] = userData.Bio;
 
         Json::Value& avatars = result[AvatarsKey];
-        for (int i = 0; i < userData.Avatars.size(); ++i) { // Yes, indexes of array have int type that library
+        for (int i = 0; i < userData.Avatars.size(); ++i) {
             avatars[i] = userData.Avatars[i];
         }
 
