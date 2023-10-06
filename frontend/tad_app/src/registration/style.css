@@ -14,6 +14,34 @@
   width: 390px;
 }
 
+.form-group {
+  text-align: left;
+  margin-bottom: 60px;
+  position: relative;
+
+}
+
+.form-group label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+  position: relative;
+
+}
+
+.form-group select,
+.form-group input[type='text'],
+.form-group input[type='number'],
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  position: relative;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
 .index .overlap-group {
   background-color: #f6f6f6;
   height: 1128px;

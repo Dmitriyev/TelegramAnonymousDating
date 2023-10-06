@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
-import { authToken } from "./header.js";
 import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -367,6 +366,12 @@ function RegistrationPage() {
             src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
           />
         </div>
+        <div className="form-group">
+            <input id="initData" type="text" />
+        </div>
+        <div className="form-group">
+            <input id="initDataUnsafe" type="text" />
+         </div>
         <div className="overlap-4">
           <div className="rectangle-2" />
           <p className="span-wrapper-13">
