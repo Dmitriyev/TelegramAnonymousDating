@@ -2,12 +2,16 @@
 
 #include <json/json.h>
 
+#include <filesystem>
+#include <optional>
 #include <string>
 #include <vector>
 
 
 namespace utils {
-    // All methods throws exceptions
+    std::optional<Json::Value> ParseJsonFile(const std::filesystem::path& configPath);
+
+    // All methods below throws exceptions
     // Helpers exists because jsoncpp contributors write shitcode that aborts program when throwing exception needed
     // https://github.com/open-source-parsers/jsoncpp/blob/master/include/json/assertions.h#L49
     // ToDo: Use other json library

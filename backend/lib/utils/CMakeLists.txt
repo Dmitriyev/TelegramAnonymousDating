@@ -16,5 +16,5 @@ add_library(${PROJECT_NAME} ${UTILS_SOURCES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${UTILS_ROOT_DIR})
 
-target_include_directories(${PROJECT_NAME} PUBLIC jsoncpp)
+target_link_libraries(${PROJECT_NAME} PUBLIC jsoncpp)
 
