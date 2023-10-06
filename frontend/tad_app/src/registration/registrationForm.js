@@ -12,7 +12,7 @@ function RegistrationPage() {
   const [city, setCity] = useState("");
   const [bio, setBio] = useState("");
   const [error, setError] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFile, setSelectedFile] = useState("");
 
   const [telegramId, setTelegramId] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
