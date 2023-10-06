@@ -1,5 +1,6 @@
 #include "json_utils.h"
 
+#include <fstream>
 #include <sstream>
 
 
@@ -14,6 +15,22 @@ namespace {
 }
 
 namespace utils {
+    std::optional<Json::Value> ParseJsonFile(const std::filesystem::path& configPath) {
+        std::ifstream fileStream;
+        fileStream.open(configPath.c_str());
+
+        Json::Value json;
+        Json::CharReaderBuilder builder;
+        builder["collectComments"] = true; // Supports json file comments
+        JSONCPP_STRING errors;
+
+        if (!parseFromStream(builder, fileStream, &json, &errors)) {
+            return std::nullopt;
+        }
+
+        return json;
+    }
+
     std::string GetStringValueFromJson(const Json::Value& value, const std::string& key) {
         CheckFieldExistance(value, key);
 

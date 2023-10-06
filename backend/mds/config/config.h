@@ -1,14 +1,13 @@
 #pragma once
 
-#include <filesystem>
+#include <json/json.h>
+
 #include <optional>
 #include <string>
 
+
 namespace config {
     struct TConfig {
-        std::string ServerHost;
-        uint32_t ServerPort = 0;
-
         std::string CloudRegion;
         std::string CloudEndpoint;
         std::string CloudKeyId;
@@ -16,5 +15,5 @@ namespace config {
         std::string CloudBucket;
     };
 
-    std::optional<TConfig> ParseConfig(const std::filesystem::path& configPath);
+    std::optional<TConfig> ParseConfig(const Json::Value& configJson);
 }
