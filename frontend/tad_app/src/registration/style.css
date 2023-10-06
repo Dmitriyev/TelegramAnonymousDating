@@ -8,6 +8,7 @@
 
 .index .overlap-group-wrapper {
   background-color: #ffffff;
+  position: absolute;
   border: 1px none;
   height: 1128px;
   width: 390px;
@@ -18,7 +19,7 @@
   height: 1128px;
   position: relative;
 }
-
+а
 .index .overlap {
   background-color: #3390ec;
   height: 61px;

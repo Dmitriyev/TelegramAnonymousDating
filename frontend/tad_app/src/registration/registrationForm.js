@@ -120,7 +120,7 @@ function RegistrationPage() {
     const formData = new FormData();
     formData.append("photo", selectedFile);
 
-    fetch("uploadphoto/api/228", {
+    fetch("https://testing.teanda.ru/mds/upload?user_id={user-id}&format={format}&md5={md5}", {
       method: "POST",
       body: formData,
     })
@@ -150,7 +150,7 @@ function RegistrationPage() {
           photoUrl: photoUrl,
         };
 
-        fetch("register/api/228", {
+        fetch("", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -176,7 +176,6 @@ function RegistrationPage() {
   return (
     <div className="index">
     <div className="overlap-group-wrapper">
-      <div className="overlap-group">
         <div className="overlap">
           <img
             className="polygon"
@@ -188,6 +187,7 @@ function RegistrationPage() {
           </p>
         </div>
         <div className="div">
+
           <div className="rectangle" />
           <p className="span-wrapper">
             <label htmlFor="file" className="span">
@@ -382,7 +382,6 @@ function RegistrationPage() {
         </div>
       </div>
     </div>
-  </div>
   );
 }
 
