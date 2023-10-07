@@ -21,7 +21,6 @@ function RegistrationPage() {
   //   };
   // }
 
-
   useEffect(() => {
     if (
       window.Telegram &&
