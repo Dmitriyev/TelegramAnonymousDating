@@ -77,7 +77,7 @@ See also [authentification](doc/authentification.md)
 
 </details>
 
-2. Create PostgreSQL tables 
+2. Create PostgreSQL tables\
 Run postgres shell
 ```
 sudo -u postgres -i
