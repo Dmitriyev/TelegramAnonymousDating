@@ -30,11 +30,14 @@ function RegistrationPage() {
       const initDataUnsafeContent = JSON.stringify(
         window.Telegram.WebApp.initDataUnsafe
       );
-
+  
       const initDataUnsafeField = document.getElementById("initDataUnsafe");
-
+  
       if (initDataUnsafeField) {
         initDataUnsafeField.value = initDataUnsafeContent;
+  
+        const decodedData = JSON.parse(initDataUnsafeContent);
+        console.log(decodedData);
       }
     }
   }, []);
