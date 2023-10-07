@@ -3,6 +3,8 @@
 Telegram mini app for contest. This app is a dating platform. Implements classic matching logic: when user A likes profile of user B, both of them get links to of each others Telegram profiles
 
 ## Application architecture
+Telegram anonymous dating is scalable ervice with microservice architecture.
+
 There are 3 microservices in app:
 1. Server. Implements buisnesslogic of the app. Language: C++. [Description](doc/server.md)
 2. Media data storage (mds). Storage of user's avatars. Language: C++. [Description](doc/mds.md)
