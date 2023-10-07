@@ -20,7 +20,7 @@ Uploads image into storage. Implements POST method with binary image data in bod
 }
 ```
 
-**Errors codes:**
+**Error codes:**
 * 400 Reasons: empty request body, not allowed format of image, md5 cecksum mismatch;
 * 500 Error writing data into object storage.
 
