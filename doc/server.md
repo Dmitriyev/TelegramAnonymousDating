@@ -2,6 +2,10 @@
 ## Code
 Source code kept in [backend/server](../backend/server) directory
 
+## Architecture
+User accounts data stores in [PostgreSQL database](https://www.postgresql.org/).
+Information about user likes and dislikes stores in [Redis database](https://redis.io/)
+
 ## Handlers
 
 ### /register
