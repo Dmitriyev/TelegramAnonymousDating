@@ -7,6 +7,8 @@ Source code kept in [backend/lib/auth_lib](../backend/lib_auth_lib) directory
 Module validates initData received from fronend. https://core.telegram.org/bots/webapps#validating-data-received-via-the-mini-app.
 InitData passes in ```x-telegram-init-data``` header.
 
+## Authentification fail
+
 In case of failed authentification server returns 403 error code
 
 ## Settings
