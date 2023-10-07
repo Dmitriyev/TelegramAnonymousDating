@@ -11,5 +11,5 @@ There are two implementations in [auth.cpp](./auth.cpp) file:
 Function ```MakeAuthorizer``` constructs one of implementations depends on json config passed. If config has key ```debug_enabled``` and it's value is ```true```, function constructs ```TDummyAuthorizer```. In another case it constructs ```TAuthorizer``` instance
 
 ## External dependencies
-1. jsoncpp - json library
-2. libcrypto - implements hmac_sha256 hash calculation
+1. jsoncpp - json library https://github.com/open-source-parsers/jsoncpp
+2. libcrypto - implements hmac_sha256 hash calculation https://github.com/openssl/openssl
