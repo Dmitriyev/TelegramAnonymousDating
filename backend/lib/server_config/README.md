@@ -6,4 +6,3 @@ Function ```ExtractServerConfigFromJson``` creates config and return that. Retur
 
 ## External dependencies
 1. jsoncpp - json library https://github.com/open-source-parsers/jsoncpp
-2. libcrypto - implements hmac_sha256 hash calculation https://github.com/openssl/openssl
