@@ -48,7 +48,7 @@ function RegistrationPage() {
       window.Telegram.WebApp &&
       window.Telegram.WebApp.initData
     ) {
-      const initDataContent = JSON.stringify(window.Telegram.WebApp.initData);
+      const initDataContent = decodeURIComponent(window.Telegram.WebApp.initData);
 
       const initDataField = document.getElementById("initData");
 
