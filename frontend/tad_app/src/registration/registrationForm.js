@@ -382,7 +382,7 @@ function RegistrationPage() {
             <p className="span-wrapper">
               <label htmlFor="submit" className="span">
                 <p className="button-text-1" onClick={handleSubmit}>
-                  Start
+                  Start Search
                 </p>
               </label>
             </p>
