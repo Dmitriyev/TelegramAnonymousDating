@@ -9,24 +9,25 @@ Source code kept in [backend/server](../backend/mds) directory
 Uploads image into storage. Implements POST method with json body.\
 Curl exmaple:
 
-Parametrs:
+**Parametrs:**
 - id: uint. User's telegram ID
 - format: string. Image extension. Supported formats: gif, png, jpg, jpeg
 - md5: file md5 checksum
 
-Return value:
+**Return value:**
 ```
 {
   "avatar_path": <avatar_id>
 }
 ```
-Errors codes:
-400. Reasons: empty request body, not allowed format of image, md5 cecksum mismatch
-500. Error writing data into object storage 
+
+**Errors codes:**
+* 400 Reasons: empty request body, not allowed format of image, md5 cecksum mismatch;
+* 500 Error writing data into object storage.
 
 ### /avatar?id={id}
 
 Return image with passed id. Implements GET method
 
-Error codes:
-500. Error loading file from storage
+**Error codes:**
+* 500 Error loading file from storage
