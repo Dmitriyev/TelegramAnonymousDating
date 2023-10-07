@@ -3,7 +3,7 @@
 Source code kept in [backend/server](../backend/mds) directory
 
 ## Architecture
-Storage works with [amazon object storage](https://aws.amazon.com/ru/s3/). Mds is just a proxy server. It [authorize user]()
+Storage works over [amazon object storage](https://aws.amazon.com/ru/s3/). Mds is just a proxy server. It [authorize user](./authentification.md) and checks data correctness
 
 ## Handlers
 
