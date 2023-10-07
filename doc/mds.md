@@ -20,13 +20,13 @@ Return value:
   "avatar_path": <avatar_id>
 }
 ```
-Errors:
-* 400. Reasons: empty request body, not allowed format of image, md5 cecksum mismatch
-* 500. Error writing data into object storage 
+Errors codes:
+400. Reasons: empty request body, not allowed format of image, md5 cecksum mismatch
+500. Error writing data into object storage 
 
 ### /avatar?id={id}
 
 Return image with passed id. Implements GET method
 
-Errors:
-* 500. Error loading file from storage
+Error codes:
+500. Error loading file from storage
