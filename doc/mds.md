@@ -6,8 +6,7 @@ Source code kept in [backend/server](../backend/mds) directory
 
 ### /upload?user_id={user-id}&format={format}&md5={md5}
 
-Uploads image into storage. Implements POST method with json body.\
-Curl exmaple:
+Uploads image into storage. Implements POST method with json body.
 
 **Parametrs:**
 - id: uint. User's telegram ID
