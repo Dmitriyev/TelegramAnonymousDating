@@ -1,19 +1,24 @@
 #pragma once
 
+#include <json/json.h>
+
 #include <string>
 #include <memory>
+#include <optional>
 
 
 namespace auth {
+    static const std::string InitDataHeaderName = "x-telegram-init-data";
+
     class IAuthorizer {
     public:
         virtual ~IAuthorizer() = default;
 
-        public bool IsUserAuthorized(const std::string& initData);
+        virtual bool IsUserAuthentificated(const std::string& initData) const = 0;
     };
 
     using TAuthorizerPtr = std::unique_ptr<IAuthorizer>;
 
-    TAuthorizerPtr
+    std::optional<TAuthorizerPtr> MakeAuthorizer(const Json::Value& configJson);
 }
 

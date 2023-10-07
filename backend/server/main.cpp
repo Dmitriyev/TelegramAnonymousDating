@@ -4,10 +4,12 @@
 
 #include <drogon/drogon.h>
 
+#include <auth_lib/auth.h>
 #include <server_config/config.h>
 #include <utils/json_utils.h>
 
 
+using namespace auth;
 using namespace config;
 using namespace db_adapter;
 using namespace handlers;
@@ -33,6 +35,9 @@ int main(int argc, char *argv[]) {
     const auto serverConfig = ExtractServerConfigFromJson(configJson.value());
     VerifyCondition(serverConfig.has_value(), "Canot parse config file");
 
+    const auto authorizer = MakeAuthorizer(configJson.value());
+    VerifyCondition(authorizer.has_value(), "No telegram token provided");
+
     const TTableNames tableNames = {
         .UsersTable = config.value().PostgreSQLUsersTable,
     };
@@ -47,6 +52,16 @@ int main(int argc, char *argv[]) {
     );
 
     VerifyCondition(postgesqlAdapter.has_value(), "Canot connect to postgresql database");
+
+    drogon::app().registerSyncAdvice([&authorizer](const drogon::HttpRequestPtr& req) {
+        if (!authorizer.value()->IsUserAuthentificated(req->getHeader(InitDataHeaderName))) {
+            LOG_ERROR << "User not authorized";
+            auto response = drogon::HttpResponse::newHttpResponse();
+            response->setCustomStatusCode(403);
+            return response;
+        }
+        return drogon::HttpResponsePtr();
+    });
 
     drogon::app().registerHandler(
         "/register",

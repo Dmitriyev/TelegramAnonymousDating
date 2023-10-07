@@ -4,10 +4,12 @@
 
 #include <drogon/drogon.h>
 
+#include <auth_lib/auth.h>
 #include <server_config/config.h>
 #include <utils/json_utils.h>
 
 
+using namespace auth;
 using namespace aws_adapter;
 using namespace config;
 using namespace handlers;
@@ -34,6 +36,9 @@ int main(int argc, char* argv[])
     const auto serverConfig = ExtractServerConfigFromJson(configJson.value());
     VerifyCondition(serverConfig.has_value(), "Canot parse config file");
 
+    const auto authorizer = MakeAuthorizer(configJson.value());
+    VerifyCondition(authorizer.has_value(), "No telegram token provided");
+
     TAdapter adapter(
         config.value().CloudRegion,
         config.value().CloudEndpoint,
@@ -41,6 +46,16 @@ int main(int argc, char* argv[])
         config.value().CloudKey,
         config.value().CloudBucket
     );
+
+    drogon::app().registerSyncAdvice([&authorizer](const drogon::HttpRequestPtr& req) {
+        if (!authorizer.value()->IsUserAuthentificated(req->getHeader(InitDataHeaderName))) {
+            LOG_ERROR << "User not authorized";
+            auto response = drogon::HttpResponse::newHttpResponse();
+            response->setCustomStatusCode(403);
+            return response;
+        }
+        return drogon::HttpResponsePtr();
+    });
 
     drogon::app().registerHandler(
         "/upload?user_id={user-id}&format={format}&md5={md5}",
