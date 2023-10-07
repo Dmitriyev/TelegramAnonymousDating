@@ -1,6 +1,6 @@
 # MDS binary
 
-Directory contains source code of media data storage
+Directory contains source code of [media data storage](../../doc/mds.md)
 
 ## Structue
 ### aws_adapter
