@@ -6,5 +6,7 @@
     "postgresql_db": "TAD",
     "postgresql_user_table": "users",
     "postgresql_user": "<>",
-    "postgresql_password": "<>"
+    "postgresql_password": "<>",
+    //"debug_enabled": true, // Uncomment this line for debugging. It will disable authorization check
+    "telegram_token": ""
 }

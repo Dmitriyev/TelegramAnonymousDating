@@ -5,5 +5,7 @@
     "cloud_endpoint": "",
     "cloud_key_id": "",
     "cloud_key": "",
-    "cloud_bucket": ""
+    "cloud_bucket": "",
+    //"debug_enabled": true, // Uncomment this line for debugging. It will disable authorization check
+    "telegram_token": ""
 }

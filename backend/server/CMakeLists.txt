@@ -9,7 +9,10 @@ set(SERVER_ROOT_DIR ${PROJECT_SOURCE_DIR}/..)
 
 add_subdirectory(${SERVER_ROOT_DIR}/thirdparty/drogon drogon)
 add_subdirectory(${SERVER_ROOT_DIR}/lib/server_config server_config)
-# add_subdirectory(${SERVER_ROOT_DIR}/lib/utils utils)
+add_subdirectory(${SERVER_ROOT_DIR}/lib/auth_lib auth_lib)
+if (NOT TARGET utils)
+    add_subdirectory(${SERVER_ROOT_DIR}/lib/utils utils)
+endif()
 
 set(HANDLERS_SOURCE_DIR ${PROJECT_SOURCE_DIR}/handlers)
 
@@ -32,5 +35,5 @@ add_executable(${PROJECT_NAME} ${SERVER_SOURCE_FILES})
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE drogon pqxx utils server_config)
+target_link_libraries(${PROJECT_NAME} PRIVATE drogon pqxx utils server_config auth_lib)
 

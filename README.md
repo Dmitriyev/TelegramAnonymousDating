@@ -8,6 +8,8 @@ There are 3 microservices in app:
 2. Media data storage (mds). Storage of user's avatars. Language: C++. [Description](doc/mds.md)
 3. Frontend. Language: javascript + React
 
+Also read about [authentification](doc/authentification.md) of users.
+
 App architecture diagram:
 ![app architecture](/doc/media/arch.png)
 
@@ -58,15 +60,18 @@ For building server binary run
     
 <summary>Fields description</summary>
 
-```server_host - host to run server
-  server_port - port to run server
-  postgresql_host - host of PostgreSQL installation
-  postgresql_port - port of PostgreSQL installation
-  postgresql_db - database name
-  postgresql_user_table - name of table with user data
-  postgresql_user - PostgreSQL user
-  postgresql_password - PostgreSQL password
+```server_host: string. Host to run server
+  server_port: uint. Port to run server
+  postgresql_host: string. Host of PostgreSQL installation
+  postgresql_port: string. Port of PostgreSQL installation
+  postgresql_db: string. PostgreSQL database name
+  postgresql_user_table: string. Name of table with user data
+  postgresql_userstring. PostgreSQL user
+  postgresql_password: string. PostgreSQL password
+  debug_enabled: bool. If it setted to true, binary will not validate initData. Use that mode only for debugging
+  telegram_token: string. Telegram bot secret token
 ```
+See also [authentification](doc/authentification.md)
 
 </details>
 
@@ -110,14 +115,17 @@ For building mds binary run
     
 <summary>Fields description</summary>
 
-```server_host - host to run server
-  server_port - port to run server
-  cloud_region - AWS storage region
-  cloud_endpoint - AWS storage endpoint
-  cloud_key_id - id of your service account
-  cloud_key - secret key of your service account
-  cloud_bucket - bucket name where media will store
+```server_host: string. Host to run server
+  server_port: uint. Port to run server
+  cloud_region: string. AWS storage region
+  cloud_endpoint: string. AWS storage endpoint
+  cloud_key_id: string. Id of your service account
+  cloud_key: string. Secret key of your service account
+  cloud_bucket: string. Bucket name where media will store
+  debug_enabled: bool. If it setted to true, binary will not validate initData. Use that mode only for debugging
+  telegram_token: string. Telegram bot secret token
 ```
+See also [authentification](doc/authentification.md)
 
 </details>
 
