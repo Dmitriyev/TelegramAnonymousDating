@@ -134,3 +134,68 @@ See also [authentification](doc/authentification.md)
 #### Run
 
 ```bin_mds/server bin_mds/conf.json```
+
+## Amazon API gateway configuration example
+Here we use Yandex.Cloud extension for API gateway:
+
+<details>
+    
+<summary>Gateway settings</summary>
+
+```
+openapi: 3.0.0
+info:
+  title: Sample API
+  version: 1.0.0
+servers:
+- url: <server url>
+paths:
+  /api/{path+}:
+    x-yc-apigateway-any-method:
+      x-yc-apigateway-integration:
+        type: http
+        url: http://<server IP>/{path}
+        query:
+          '*': '*'
+        headers:
+          '*': '*'
+      parameters:
+      - name: path
+        in: path
+        required: false
+        schema:
+          type: string
+  /mds/{path+}:
+    x-yc-apigateway-any-method:
+      x-yc-apigateway-integration:
+        type: http
+        url: http://<mds IP>/{path}
+        query:
+          '*': '*'
+        headers:
+          '*': '*'
+      parameters:
+      - name: path
+        in: path
+        required: false
+        schema:
+          type: string
+  /{path+}:
+    x-yc-apigateway-any-method:
+      x-yc-apigateway-integration:
+        type: http
+        url: http://<frontend server IP>/{path}
+        query:
+          '*': '*'
+        headers:
+          '*': '*'
+      parameters:
+      - name: path
+        in: path
+        required: false
+        schema:
+          type: string
+
+```
+
+</details>
