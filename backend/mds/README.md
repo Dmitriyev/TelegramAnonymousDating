@@ -15,7 +15,7 @@ Defines ```TConfig``` structure that contains amazon object storage configuratio
 Defines and implements functions that handle user requests. Validates data passed and realizes logic described [here](../../doc/mds.md)
 
 ## External dependencies
-1. jsoncpp - json library
+1. jsoncpp - json library https://github.com/open-source-parsers/jsoncpp
 2. drogon - http framework https://github.com/drogonframework/drogon
 3. aws-sdk-cpp - amazon cloud library https://github.com/aws/aws-sdk-cpp
 
