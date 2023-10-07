@@ -11,7 +11,7 @@ Uploads image into storage. Implements POST method with binary image data in bod
 **Parametrs:**
 - id: uint. User's telegram ID
 - format: string. Image extension. Supported formats: gif, png, jpg, jpeg
-- md5: file md5 checksum
+- md5: string. File md5 checksum
 
 **Return value:**
 ```
