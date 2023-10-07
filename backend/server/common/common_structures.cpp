@@ -16,14 +16,15 @@ namespace {
     using TStrToIntMap = std::unordered_map<std::string, uint32_t>;
 
     static const TStrToIntMap SexStrToInt {
-        {"man", 0},
-        {"woman", 1},
+        {"man", static_cast<uint32_t>(common::ESex::Man)},
+        {"woman", static_cast<uint32_t>(common::ESex::Woman)},
     };
 
     static const TStrToIntMap OrientationStrToInt {
         {"straight", 0},
         {"bi", 1},
         {"gay", 2},
+        {"lesbian", 3},
     };
 
     static const std::unordered_map<TNumericCodeTypes, const TStrToIntMap&> StrToIntMaps {
@@ -52,6 +53,7 @@ namespace {
     static const std::string CityKey = "city";
     static const std::string BioKey = "bio";
     static const std::string AvatarsKey = "avatars";
+    static const std::string TargetSexKey = "target_sex";
 }
 
 namespace common {
@@ -68,6 +70,7 @@ namespace common {
                 .City = GetStringValueFromJson(json, CityKey),
                 .Bio = GetStringValueFromJson(json, BioKey),
                 .Avatars = GetStringVectorFromJson(json, AvatarsKey),
+                .TargetSex = GetUIValueFromJson(json, TargetSexKey)
             };
             return user;
         } catch (const std::exception& e) {
@@ -85,6 +88,7 @@ namespace common {
         result[OrientationKey] = userData.Orientation;
         result[CityKey] = userData.City;
         result[BioKey] = userData.Bio;
+        result[TargetSexKey] = userData.TargetSex;
 
         Json::Value& avatars = result[AvatarsKey];
         for (int i = 0; i < userData.Avatars.size(); ++i) {

@@ -1,5 +1,6 @@
 #include "config/config.h"
 #include "db_adapter/adapter.h"
+#include "db_adapter/redis.h"
 #include "handlers/handlers.h"
 
 #include <drogon/drogon.h>
@@ -63,6 +64,8 @@ int main(int argc, char *argv[]) {
         return drogon::HttpResponsePtr();
     });
 
+    drogon::app().createRedisClient("127.0.0.1", 6379);
+
     drogon::app().registerHandler(
         "/register",
         [&postgesqlAdapter](const drogon::HttpRequestPtr &req, std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
@@ -93,6 +96,15 @@ int main(int argc, char *argv[]) {
             StartHanler(*postgesqlAdapter.value(), req, std::move(callback), userId);
         },
         {drogon::Get}
+    );
+
+    drogon::app().registerHandler(
+        "/search?user_id={user-id}&page={page}",
+        [&postgesqlAdapter](const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback, const std::string& userId, uint32_t page) {
+            TRedisAdapter redis(drogon::app().getRedisClient());
+            SearchHandler(*postgesqlAdapter.value(), req, std::move(callback), userId, redis, page);
+        },
+        {Get}
     );
 
     LOG_INFO << "Server running on " << serverConfig.value().Host << ":" << serverConfig.value().Port;

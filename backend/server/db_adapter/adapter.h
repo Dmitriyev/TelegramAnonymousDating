@@ -22,6 +22,7 @@ namespace db_adapter {
         bool UpdateUserData(const common::TUser& user);
         std::optional<common::TUser> GetAccountInfo(common::TUserId userId);
         std::optional<bool> IsUserRegistred(common::TUserId userId);
+        std::vector<common::TUser> GetMatchCandidates(const common::TUser& user, uint32_t page);
 
     private:
         pqxx::connection Connection;
