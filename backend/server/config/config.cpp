@@ -16,6 +16,8 @@ namespace config {
                 .PostgreSQLUsersTable = GetStringValueFromJson(configJson, "postgresql_user_table"),
                 .PostgreSQLUser = GetStringValueFromJson(configJson, "postgresql_user"),
                 .PostgreSQLPassword = GetStringValueFromJson(configJson, "postgresql_password"),
+                .RedisHost = GetStringValueFromJson(configJson, "redis_host"),
+                .RedisPort = GetUIValueFromJson(configJson, "redis_port"),
             };
 
             return config;

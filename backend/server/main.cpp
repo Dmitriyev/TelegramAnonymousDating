@@ -64,7 +64,7 @@ int main(int argc, char *argv[]) {
         return drogon::HttpResponsePtr();
     });
 
-    drogon::app().createRedisClient("127.0.0.1", 6379);
+    drogon::app().createRedisClient(config.value().RedisHost, config.value().RedisPort);
 
     drogon::app().registerHandler(
         "/register",
