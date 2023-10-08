@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "md5": "^2.3.0",
     "react-hook-form": "^7.47.0"
   }
 }

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
 import { Link } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
+import { BrowserRouter as Router, Route, Switch, useNavigate } from "react-router-dom";
+import md5 from 'md5'
 function RegistrationPage() {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
@@ -13,13 +13,22 @@ function RegistrationPage() {
   const [error, setError] = useState("");
   const [selectedFile, setSelectedFile] = useState("");
 
-  const [telegramId, setTelegramId] = useState("");
+  const [telegramId, setTelegramId] = useState("121444562");
   const [photoUrl, setPhotoUrl] = useState("");
-  // function BackToTelegram() {
-  //   const handleBackToTelegram = () => {
-  //     window.close();
-  //   };
-  // }
+  const [isUserRegistered, setIsUserRegistered] = useState(false);
+  const navigate = useNavigate()
+  
+  useEffect(() => {
+    const id = 121444562;
+    fetch(`https://testing.teanda.ru/api/start?user_id=${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setIsUserRegistered(data.isRegistered);
+      })
+      .catch((error) => {
+        console.error("Ошибка запроса на сервер:", error);
+      });
+  }, []);
 
   useEffect(() => {
     if (
@@ -30,14 +39,11 @@ function RegistrationPage() {
       const initDataUnsafeContent = JSON.stringify(
         window.Telegram.WebApp.initDataUnsafe
       );
-  
+
       const initDataUnsafeField = document.getElementById("initDataUnsafe");
-  
+
       if (initDataUnsafeField) {
         initDataUnsafeField.value = initDataUnsafeContent;
-  
-        const decodedData = JSON.parse(initDataUnsafeContent);
-        console.log(decodedData);
       }
     }
   }, []);
@@ -58,17 +64,17 @@ function RegistrationPage() {
     }
   }, []);
 
-  const [isDarkTheme, setIsDarkTheme] = useState(false); // Check dark theme
+  // const [isDarkTheme, setIsDarkTheme] = useState(false); // Check dark theme
 
-  useEffect(() => {
-    // Check dark theme is active
-    if (
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
-      setIsDarkTheme(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   // Check dark theme is active
+  //   if (
+  //     window.matchMedia &&
+  //     window.matchMedia("(prefers-color-scheme: dark)").matches
+  //   ) {
+  //     setIsDarkTheme(true);
+  //   }
+  // }, []);
 
   const validateName = (inputName) => {
     const trimmedName = inputName.trim();
@@ -118,11 +124,13 @@ function RegistrationPage() {
   //     }
   //   };
 
+
+
   const uploadPhotoAndGetUrl = () => {
     const formData = new FormData();
     formData.append("photo", selectedFile);
-
-    fetch("https://testing.teanda.ru/mds/upload?user_id={user-id}&format={format}&md5={md5}", {
+    const hash = md5(selectedFile)
+    return fetch(`https://testing.teanda.ru/mds/upload?user_id=${telegramId}&format=jpeg&md5=${hash}`, {
       method: "POST",
       body: formData,
     })
@@ -137,9 +145,10 @@ function RegistrationPage() {
       });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateName(name) && validateAge(age) && !error) {
+      await uploadPhotoAndGetUrl()
       if (photoUrl) {
         const userData = {
           name: name,
@@ -148,11 +157,11 @@ function RegistrationPage() {
           orientation: orientation,
           city: city,
           bio: bio,
-          telegramId: telegramId,
-          photoUrl: photoUrl,
+          id: telegramId,
+          avatar: photoUrl,
         };
 
-        fetch("", {
+        fetch("https://testing.teanda.ru/api/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -174,6 +183,11 @@ function RegistrationPage() {
       }
     }
   };
+
+  if (isUserRegistered){
+    console.log("redirect")
+    navigate("/menu");
+  }
 
   return (
     <div className="index">
@@ -374,6 +388,7 @@ function RegistrationPage() {
         </div>
         <div className="form-group">
             <input id="initDataUnsafe" type="text" />
+
          </div>
         <div className="overlap-4">
           <div className="rectangle-2" />
