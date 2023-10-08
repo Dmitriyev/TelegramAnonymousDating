@@ -1,4 +1,4 @@
-/* .index {
+.index-menu {
   background-color: #ffffff;
   display: flex;
   flex-direction: row;
@@ -6,7 +6,7 @@
   width: 100%;
 }
 
-.index .div {
+.index .div-menu {
   background-color: #ffffff;
   height: 696px;
   overflow: hidden;
@@ -14,7 +14,7 @@
   width: 390px;
 }
 
-.index .overlap {
+.index .overlap-menu {
   background-color: #3390ec;
   height: 61px;
   left: 0;
@@ -23,7 +23,7 @@
   width: 390px;
 }
 
-.index .polygon {
+.index .polygon-menu {
   height: 19px;
   left: 19px;
   position: absolute;
@@ -31,7 +31,7 @@
   width: 15px;
 }
 
-.index .text-wrapper {
+.index .text-wrapper-menu {
   color: #ffffff;
   font-family: "Onest", Helvetica;
   font-size: 16px;
@@ -43,7 +43,7 @@
   top: 20px;
 }
 
-.index .overlap-group {
+.index .overlap-group-menu {
   height: 671px;
   left: 0;
   position: absolute;
@@ -51,7 +51,7 @@
   width: 390px;
 }
 
-.index .rectangle {
+.index .rectangle-menu {
   background-color: #ffffff;
   height: 304px;
   left: 0;
@@ -60,7 +60,7 @@
   width: 390px;
 }
 
-.index .rectangle-2 {
+.index .rectangle-menu-2 {
   background-color: #ffffff;
   box-shadow: 0px 4px 4px #00000040;
   height: 304px;
@@ -70,7 +70,7 @@
   width: 390px;
 }
 
-.index .element {
+.index .element-menu {
   height: 300px;
   left: 3px;
   position: absolute;
@@ -78,7 +78,7 @@
   width: 387px;
 }
 
-.index .ellipse {
+.index .ellipse-menu {
   background-color: #e1e1e1;
   border-radius: 24.5px;
   height: 49px;
@@ -88,7 +88,7 @@
   width: 49px;
 }
 
-.index .img {
+.index .img-menu {
   height: 30px;
   left: 334px;
   object-fit: cover;
@@ -97,7 +97,7 @@
   width: 30px;
 }
 
-.index .rectangle-3 {
+.index .rectangle-menu-3 {
   background-color: #e1e1e1;
   height: 11px;
   left: 359px;
@@ -106,7 +106,7 @@
   width: 7px;
 }
 
-.index .rectangle-4 {
+.index .rectangle-menu-4 {
   background-color: #e1e1e1;
   height: 4px;
   left: 352px;
@@ -115,7 +115,7 @@
   width: 10px;
 }
 
-.index .text-wrapper-2 {
+.index .text-wrapper-menu-2 {
   color: #ffffff;
   font-family: "Onest", Helvetica;
   font-size: 32.6px;
@@ -127,7 +127,7 @@
   top: 257px;
 }
 
-.index .rectangle-5 {
+.index .rectangle-menu-5 {
   background-color: #f6f6f6;
   height: 371px;
   left: 0;
@@ -136,7 +136,7 @@
   width: 390px;
 }
 
-.index .text-wrapper-3 {
+.index .text-wrapper-menu-3 {
   color: #474747;
   font-family: "Onest", Helvetica;
   font-size: 16px;
@@ -148,7 +148,7 @@
   top: 268px;
 }
 
-.index .rectangle-6 {
+.index .rectangle-menu-6 {
   background-color: #ffffff;
   border-radius: 15px;
   box-shadow: 0px 4px 7px #00000026;
@@ -159,7 +159,7 @@
   width: 355px;
 }
 
-.index .text-wrapper-4 {
+.index .text-wrapper-menu-4 {
   color: #3390ec;
   font-family: "Onest", Helvetica;
   font-size: 12px;
@@ -171,7 +171,7 @@
   top: 347px;
 }
 
-.index .rectangle-7 {
+.index .rectangle-menu-7 {
   background-color: #ffffff;
   border-radius: 15px;
   box-shadow: 0px 4px 7px #00000026;
@@ -182,7 +182,7 @@
   width: 355px;
 }
 
-.index .text-wrapper-5 {
+.index .text-wrapper-menu-5 {
   color: #3390ec;
   font-family: "Onest", Helvetica;
   font-size: 12px;
@@ -194,7 +194,7 @@
   top: 418px;
 }
 
-.index .rectangle-8 {
+.index .rectangle-menu-8 {
   background-color: #ffffff;
   border-radius: 15px;
   box-shadow: 0px 4px 7px #00000026;
@@ -205,7 +205,7 @@
   width: 355px;
 }
 
-.index .text-wrapper-6 {
+.index .text-wrapper-menu-6 {
   color: #3390ec;
   font-family: "Onest", Helvetica;
   font-size: 12px;
@@ -217,7 +217,7 @@
   top: 485px;
 }
 
-.index .rectangle-9 {
+.index .rectangle-menu-9 {
   background-color: #ffffff;
   border-radius: 15px;
   box-shadow: 0px 4px 7px #00000026;
@@ -228,7 +228,7 @@
   width: 355px;
 }
 
-.index .text-wrapper-7 {
+.index .text-wrapper-menu-7 {
   color: #3390ec;
   font-family: "Onest", Helvetica;
   font-size: 12px;
@@ -240,7 +240,7 @@
   top: 556px;
 }
 
-.index .element-2 {
+.index .element-menu-2 {
   height: 41px;
   left: 39px;
   object-fit: cover;
@@ -249,7 +249,7 @@
   width: 41px;
 }
 
-.index .element-3 {
+.index .element-menu-3 {
   height: 39px;
   left: 34px;
   object-fit: cover;
@@ -258,7 +258,7 @@
   width: 39px;
 }
 
-.index .element-4 {
+.index .element-menu-4 {
   height: 31px;
   left: 44px;
   object-fit: cover;
@@ -267,11 +267,11 @@
   width: 31px;
 }
 
-.index .element-5 {
+.index .element-menu-5 {
   height: 30px;
   left: 45px;
   object-fit: cover;
   position: absolute;
   top: 548px;
   width: 30px;
-} */
+}

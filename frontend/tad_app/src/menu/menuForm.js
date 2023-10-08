@@ -1,89 +1,124 @@
-// import React from 'react';
-// import './menuForm.css';
-// import { Link } from 'react-router-dom';
-// import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React from 'react';
+import { useState, useEffect } from "react";
+import './menuForm.css';
+import { Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import axios from 'axios'
+function Menu() {
+  const [userInfo, setUserInfo] = useState({});
+  const [id, setId] = useState(""); 
 
-// function Menu() {
+  useEffect(() => {
+    if (
+      window.Telegram &&
+      window.Telegram.WebApp &&
+      window.Telegram.WebApp.initData
+    ) {
+      const initDataContent = JSON.stringify(
+        window.Telegram.WebApp.initData
+      );
 
-//   return (
-//        <div className="overlap-group-wrapper">
-//       <div className="div-1">
-//         <div className="overlap">
-//           <img
-//             className="polygon"
-//             alt="Polygon"
-//             src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/polygon-1-2@2x.png"
-//           />
-//           <p className="span-wrapper">
-//             <span className="text-wrapper">Profile</span>
-//           </p>
-//         </div>
-//         <div className="overlap-group">
-//           <div className="rectangle" />
-//           <div className="rectangle-2" />
-//           <img
-//             className="element"
-//             alt="Element"
-//             src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/-------2-1-2@2x.png"
-//           />
-//           <div className="ellipse" />
-//           <img
-//             className="img"
-//             alt="Element"
-//             src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/-----1-1@2x.png"
-//           />
-//           <div className="rectangle-3" />
-//           <div className="rectangle-4" />
-//           <p className="p">
-//             <span className="span">+</span>
-//           </p>
-//           <div className="rectangle-5" />
-//           <p className="element-2">
-//             <span className="text-wrapper-2">Name, Age</span>
-//           </p>
-//           <div className="rectangle-6" />
-//           <p className="span-wrapper-2">
-//             <span className="text-wrapper-3">Search</span>
-//           </p>
-//           <div className="rectangle-7" />
-//           <p className="span-wrapper-3">
-//             <span className="text-wrapper-3">Those who like me</span>
-//           </p>
-//           <div className="rectangle-8" />
-//           <p className="span-wrapper-4">
-//             <span className="text-wrapper-3">
-//             <Link to="/">
-//               Edit Profile
-//               </Link>
-//               </span>
-//           </p>
-//           <div className="rectangle-9" />
-//           <p className="span-wrapper-5">
-//             <span className="text-wrapper-3">Search Settig</span>
-//           </p>
-//           <img
-//             className="element-3"
-//             alt="Element"
-//             src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/-------1-2@2x.png"
-//           />
-//           <img
-//             className="element-4"
-//             alt="Element"
-//             src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/-----1-2@2x.png"
-//           />
-//           <img
-//             className="element-5"
-//             alt="Element"
-//             src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/----------------------1-1@2x.png"
-//           />
-//           <img
-//             className="element-6"
-//             alt="Element"
-//             src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/-----1-3@2x.png"
-//           />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-// export default Menu;
+      const initDataField = document.getElementById("initData");
+
+      if (initDataField) {
+        initDataField.value = initDataContent;
+        const initData = JSON.parse(initDataContent);
+        if (initData.id) {
+          setId(initData.id);
+        }
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (id) {
+      axios.get(`https://testing.teanda.ru/account_info?user_id=${id}`)
+        .then((response) => {
+          const data = response.data;
+          if (data && data.user_info) {
+            const { id, name, age, avatar } = data.user_info;
+            setUserInfo({ id, name, age, avatar });
+          } else {
+            console.error("No such user info");
+          }
+        })
+        .catch((error) => {
+          console.error("Server error", error);
+        });
+    }
+  }, [id]);
+
+  return (
+    <div className="index-menu">
+    <div className="div-menu">
+      <div className="overlap-menu">
+        <img
+          className="polygon-menu"
+          alt="Polygon"
+          src="https://cdn.animaapp.com/projects/6522593a895771eda12b6b7a/releases/652259ebd148241fab287b78/img/polygon-1.svg"
+        />
+        <div className="text-wrapper-menu">Profile</div>
+      </div>
+      <div className="overlap-group-menu">
+        <div className="rectangle-menu" />
+        <div className="rectangle-menu-2" />
+        <img
+          className="element-menu"
+          alt="Element"
+          src="https://cdn.animaapp.com/projects/6522593a895771eda12b6b7a/releases/652259ebd148241fab287b78/img/-------2-1-1@2x.png"
+        />
+        <div className="ellipse-menu" />
+        <img
+          className="img-menu"
+          alt="Element"
+          src="https://cdn.animaapp.com/projects/6522593a895771eda12b6b7a/releases/652259ebd148241fab287b78/img/-----1.png"
+        />
+        <div className="rectangle-menu-3" />
+        <div className="rectangle-menu-4" />
+        <div className="text-wrapper-menu-2">+</div>
+        <div className="rectangle-menu-5" />
+        <div className="text-wrapper-menu-3">{userInfo.name}, {userInfo.age}</div>
+        <div className="rectangle-menu-6" />
+        <div className="text-wrapper-menu-4">
+          <Link to="/search">
+            Search
+            </Link>
+            </div>
+        <div className="rectangle-menu-7" />
+        <div className="text-wrapper-menu-5">Who liked me?</div>
+        <div className="rectangle-menu-8" />
+        <div className="text-wrapper-menu-6">
+          <Link to="/edit_account">
+          Edit Profile
+          </Link>
+          </div>
+        <div className="rectangle-menu-9" />
+        <div className="text-wrapper-menu-7">
+          <>Chats</>
+          </div>
+        <img
+          className="element-menu-2"
+          alt="Element"
+          src="https://cdn.animaapp.com/projects/6522593a895771eda12b6b7a/releases/652259ebd148241fab287b78/img/-------1-1.png"
+        />
+        <img
+          className="element-menu-3"
+          alt="Element"
+          src="https://cdn.animaapp.com/projects/6522593a895771eda12b6b7a/releases/652259ebd148241fab287b78/img/-----1-1.png"
+        />
+        <img
+          className="element-menu-4"
+          alt="Element"
+          src="https://cdn.animaapp.com/projects/6522593a895771eda12b6b7a/releases/652259ebd148241fab287b78/img/----------------------1.png"
+        />
+        <img
+          className="element-menu-5"
+          alt="Element"
+          src="https://cdn.animaapp.com/projects/6522593a895771eda12b6b7a/releases/652259ebd148241fab287b78/img/-----1-2.png"
+        />
+      </div>
+    </div>
+  </div>
+);
+};
+export default Menu;

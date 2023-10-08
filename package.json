@@ -1,5 +1,9 @@
 {
   "dependencies": {
-    "react-hook-form": "^7.47.0"
+    "axios": "^1.5.1",
+    "json": "^11.0.0",
+    "md5": "^2.3.0",
+    "react-hook-form": "^7.47.0",
+    "stream": "^0.0.2"
   }
 }

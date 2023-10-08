@@ -1,0 +1,270 @@
+.index-search {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .index .overlap-group-wrapper-search {
+    background-color: #ffffff;
+    height: 696px;
+    overflow: hidden;
+    width: 390px;
+  }
+  
+  .index .overlap-group-search {
+    background-color: #f6f6f6;
+    height: 733px;
+    position: relative;
+  }
+  
+  .index .overlap {
+    background-color: #3390ec;
+    height: 61px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 390px;
+  }
+  
+  .index .polygon-search {
+    height: 19px;
+    left: 19px;
+    position: absolute;
+    top: 20px;
+    width: 15px;
+  }
+  
+  .index .text-wrapper-search {
+    color: #ffffff;
+    font-family: "Onest", Helvetica;
+    font-size: 16px;
+    font-weight: 700;
+    left: 52px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 20px;
+  }
+  
+  .index .element-search {
+    height: 26px;
+    left: 19px;
+    position: absolute;
+    top: 421px;
+    width: 21px;
+  }
+  
+  .index .div-search {
+    background-color: #b8b8b8;
+    border-radius: 44px;
+    box-shadow: 0px 4px 4px #0000000f;
+    height: 88px;
+    left: 70px;
+    position: absolute;
+    top: 560px;
+    width: 88px;
+  }
+  
+  .index .line-search {
+    height: 42px;
+    left: 23px;
+    position: absolute;
+    top: 23px;
+    width: 42px;
+  }
+  
+  .index .img-search {
+    height: 41px;
+    left: 23px;
+    position: absolute;
+    top: 23px;
+    width: 41px;
+  }
+  
+  .index .element-wrapper-search {
+    background-color: #ed334a;
+    border-radius: 44px;
+    box-shadow: 0px 4px 4px #0000000f;
+    height: 88px;
+    left: 234px;
+    position: absolute;
+    top: 560px;
+    width: 88px;
+  }
+  
+  .index .element-search-2 {
+    height: 48px;
+    left: 20px;
+    object-fit: cover;
+    position: absolute;
+    top: 22px;
+    width: 48px;
+  }
+  
+  .index .overlap-search-2 {
+    background-color: #ffffff;
+    box-shadow: 0px 4px 4px #00000008;
+    height: 339px;
+    left: 0;
+    position: absolute;
+    top: 62px;
+    width: 390px;
+  }
+  
+  .index .element-search-3 {
+    height: 297px;
+    left: 1px;
+    position: absolute;
+    top: 42px;
+    width: 387px;
+  }
+  
+  .index .text-wrapper-search-2 {
+    color: #474747;
+    font-family: "Onest", Helvetica;
+    font-size: 16px;
+    font-weight: 700;
+    left: 19px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 303px;
+  }
+  
+  .index .polygon-search-2 {
+    height: 19px;
+    left: 364px;
+    position: absolute;
+    top: 159px;
+    width: 14px;
+  }
+  
+  .index .text-wrapper-search-3 {
+    color: #474747;
+    font-family: "Onest", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    left: 49px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 427px;
+  }
+  
+  .index .p-search {
+    color: #9a9a9a;
+    font-family: "Onest", Helvetica;
+    font-size: 9.3px;
+    font-weight: 400;
+    left: 19px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 475px;
+    width: 358px;
+  }
+  
+  .index .text-wrapper-search-4 {
+    color: #474747;
+    font-family: "Onest", Helvetica;
+    font-size: 9.3px;
+    font-weight: 400;
+    left: 226px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 416px;
+    width: 61px;
+  }
+  
+  .index .overlap-search-3 {
+    height: 7px;
+    left: 212px;
+    position: absolute;
+    top: 419px;
+    width: 8px;
+  }
+  
+  .index .line-search-2 {
+    height: 5px;
+    left: 0;
+    object-fit: cover;
+    position: absolute;
+    top: 2px;
+    width: 4px;
+  }
+  
+  .index .line-search-3 {
+    height: 7px;
+    left: 3px;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    width: 5px;
+  }
+  
+  .index .text-wrapper-search-5 {
+    color: #474747;
+    font-family: "Onest", Helvetica;
+    font-size: 9.3px;
+    font-weight: 400;
+    left: 316px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 416px;
+    width: 61px;
+  }
+  
+  .index .overlap-search-4 {
+    height: 7px;
+    left: 304px;
+    position: absolute;
+    top: 419px;
+    width: 8px;
+  }
+  
+  .index .text-wrapper-search-6 {
+    color: #474747;
+    font-family: "Onest", Helvetica;
+    font-size: 9.3px;
+    font-weight: 400;
+    left: 226px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 433px;
+    width: 61px;
+  }
+  
+  .index .overlap-search-5 {
+    height: 7px;
+    left: 212px;
+    position: absolute;
+    top: 436px;
+    width: 8px;
+  }
+  
+  .index .text-wrapper-search-7 {
+    color: #474747;
+    font-family: "Onest", Helvetica;
+    font-size: 9.3px;
+    font-weight: 400;
+    left: 300px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 433px;
+    width: 61px;
+  }
+  
+  .index .overlap-search-6 {
+    height: 7px;
+    left: 288px;
+    position: absolute;
+    top: 436px;
+    width: 8px;
+  }
+  
