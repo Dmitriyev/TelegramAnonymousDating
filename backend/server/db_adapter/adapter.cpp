@@ -60,10 +60,13 @@ namespace {
     std::string FormatSex(uint32_t targetSex) {
         std::stringstream ss;
         if (targetSex & static_cast<uint32_t>(common::ESex::Man)) {
-            ss << static_cast<uint32_t>(common::ESex::Man);    
+            ss << "'" << static_cast<uint32_t>(common::ESex::Man) << "'";    
         }
         if (targetSex & static_cast<uint32_t>(common::ESex::Woman)) {
-            ss << ", " << static_cast<uint32_t>(common::ESex::Woman);    
+            if (!ss.view().empty()) {
+                ss << ", ";
+            }
+            ss << "'" << static_cast<uint32_t>(common::ESex::Woman) << "'";    
         }
         return ss.str();
     }
@@ -89,8 +92,12 @@ namespace db_adapter {
                 user.Sex << ", " <<
                 user.Orientation << ", " <<
                 "'" << user.City << "', " <<
+<<<<<<< HEAD
                 "'" << user.Bio << "', " <<
                 StringVectorToPostgreSQLFormat(user.Avatars) << ");";
+=======
+                "'" << user.Bio << "', " << user.TargetSex << ");";
+>>>>>>> 140fce8 (fix adapter)
 
             work.exec0(insertCommand.str());
             work.commit();
@@ -186,8 +193,8 @@ namespace db_adapter {
         pqxx::work work(Connection);
         try {
             std::stringstream selectCommand;
-            selectCommand << "SELECT * FROM " << TableNames.UsersTable << " WHERE " << GeoCol << " = " << user.City
-                << " AND " << SexCol << " IN (" << FormatSex(user.TargetSex) << ") << LIMIT " << page * 100 << ";";
+            selectCommand << "SELECT * FROM " << TableNames.UsersTable << " WHERE " << GeoCol << " = '" << user.City
+                << "' AND " << SexCol << " IN (" << FormatSex(user.TargetSex) << ") AND " << IdCol << " != " << user.Id << " LIMIT " << page * 100 << ";";
             const auto res = work.exec(selectCommand.str());
             
             if (res.size() == 0) {
@@ -212,7 +219,11 @@ namespace db_adapter {
             }
             return users;
         } catch (const std::exception& e) {
+<<<<<<< HEAD
 
+=======
+            LOG_ERROR << "Canot search user data in table " << TableNames.UsersTable << ". " << e.what();
+>>>>>>> 140fce8 (fix adapter)
         }
         return {};
     }
