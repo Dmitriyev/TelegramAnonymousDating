@@ -92,12 +92,9 @@ namespace db_adapter {
                 user.Sex << ", " <<
                 user.Orientation << ", " <<
                 "'" << user.City << "', " <<
-<<<<<<< HEAD
                 "'" << user.Bio << "', " <<
-                StringVectorToPostgreSQLFormat(user.Avatars) << ");";
-=======
-                "'" << user.Bio << "', " << user.TargetSex << ");";
->>>>>>> 140fce8 (fix adapter)
+                StringVectorToPostgreSQLFormat(user.Avatars) << "', " <<
+                user.TargetSex << ");";
 
             work.exec0(insertCommand.str());
             work.commit();
@@ -219,11 +216,7 @@ namespace db_adapter {
             }
             return users;
         } catch (const std::exception& e) {
-<<<<<<< HEAD
-
-=======
             LOG_ERROR << "Canot search user data in table " << TableNames.UsersTable << ". " << e.what();
->>>>>>> 140fce8 (fix adapter)
         }
         return {};
     }

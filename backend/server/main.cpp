@@ -100,11 +100,11 @@ int main(int argc, char *argv[]) {
 
     drogon::app().registerHandler(
         "/search?user_id={user-id}&page={page}",
-        [&postgesqlAdapter](const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback, const std::string& userId, uint32_t page) {
+        [&postgesqlAdapter](const drogon::HttpRequestPtr &req, std::function<void(const drogon::HttpResponsePtr &)> &&callback, const std::string& userId, uint32_t page) {
             TRedisAdapter redis(drogon::app().getRedisClient());
             SearchHandler(*postgesqlAdapter.value(), req, std::move(callback), userId, redis, page);
         },
-        {Get}
+        {drogon::Get}
     );
 
     LOG_INFO << "Server running on " << serverConfig.value().Host << ":" << serverConfig.value().Port;

@@ -18,6 +18,7 @@ set(HANDLERS_SOURCE_DIR ${PROJECT_SOURCE_DIR}/handlers)
 
 set(HANDLERS_SOURCES 
 	${HANDLERS_SOURCE_DIR}/account.cpp
+	${HANDLERS_SOURCE_DIR}/search.cpp
 )
 
 file(COPY_FILE ${PROJECT_SOURCE_DIR}/config/conf.json ${CMAKE_BINARY_DIR}/conf_template.json)
@@ -27,6 +28,7 @@ set(
     ${PROJECT_SOURCE_DIR}/main.cpp
     ${PROJECT_SOURCE_DIR}/config/config.cpp
     ${PROJECT_SOURCE_DIR}/db_adapter/adapter.cpp
+    ${PROJECT_SOURCE_DIR}/db_adapter/redis.cpp
     ${PROJECT_SOURCE_DIR}/common/common_structures.cpp 
     ${HANDLERS_SOURCES}
 )
@@ -36,4 +38,3 @@ add_executable(${PROJECT_NAME} ${SERVER_SOURCE_FILES})
 target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_SOURCE_DIR})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE drogon pqxx utils server_config auth_lib)
-
