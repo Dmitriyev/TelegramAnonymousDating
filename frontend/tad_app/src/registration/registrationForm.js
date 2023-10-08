@@ -17,9 +17,9 @@ function RegistrationPage() {
   const [photoUrl, setPhotoUrl] = useState("");
   const [isUserRegistered, setIsUserRegistered] = useState(false);
   const navigate = useNavigate()
-  
+  const id = telegramId
   useEffect(() => {
-    const id = 121444562;
+    const id = telegramId;
     fetch(`https://testing.teanda.ru/api/start?user_id=${id}`)
       .then((response) => response.json())
       .then((data) => {
@@ -157,7 +157,7 @@ function RegistrationPage() {
           orientation: orientation,
           city: city,
           bio: bio,
-          id: telegramId,
+          id: id,
           avatar: photoUrl,
         };
 
