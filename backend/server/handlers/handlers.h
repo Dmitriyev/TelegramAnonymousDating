@@ -42,4 +42,13 @@ namespace handlers {
         db_adapter::TRedisAdapter& redisAdapter,
         const uint32_t page
     );
+
+    void LikeHandler(
+        const drogon::HttpRequestPtr& req,
+        std::function<void(const drogon::HttpResponsePtr&)>&& callback,
+        db_adapter::TRedisAdapter& redisAdapter,
+        const std::string& whoLikedId,
+        const std::string& targetLikeId,
+        bool dislike
+    );
 }

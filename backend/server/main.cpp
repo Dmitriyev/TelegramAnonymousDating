@@ -107,6 +107,24 @@ int main(int argc, char *argv[]) {
         {drogon::Get}
     );
 
+    drogon::app().registerHandler(
+        "/like?user_id={user-id}&target_user_id={target-user-id}",
+        [](const drogon::HttpRequestPtr &req, std::function<void(const drogon::HttpResponsePtr &)> &&callback, const std::string& userId, const std::string& targetUserId) {
+            TRedisAdapter redis(drogon::app().getRedisClient());
+            LikeHandler(req, std::move(callback), redis, userId, targetUserId, false);
+        },
+        {drogon::Get}
+    );
+
+    drogon::app().registerHandler(
+        "/dislike?user_id={user-id}&target_user_id={target-user-id}",
+        [](const drogon::HttpRequestPtr &req, std::function<void(const drogon::HttpResponsePtr &)> &&callback, const std::string& userId, const std::string& targetUserId) {
+            TRedisAdapter redis(drogon::app().getRedisClient());
+            LikeHandler(req, std::move(callback), redis, userId, targetUserId, true);
+        },
+        {drogon::Get}
+    );
+
     LOG_INFO << "Server running on " << serverConfig.value().Host << ":" << serverConfig.value().Port;
     drogon::app().addListener(serverConfig.value().Host, serverConfig.value().Port).run();
 }

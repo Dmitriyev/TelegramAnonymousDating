@@ -49,4 +49,41 @@ namespace handlers {
         resp = drogon::toResponse(result);
         callback(resp);
     }
+
+    void LikeHandler(
+        const drogon::HttpRequestPtr& req,
+        std::function<void(const drogon::HttpResponsePtr&)>&& callback,
+        db_adapter::TRedisAdapter& redisAdapter,
+        const std::string& whoLikedId,
+        const std::string& targetLikeId,
+        bool dislike
+    ) {
+        auto resp = drogon::HttpResponse::newHttpResponse();
+        
+        TUserId whoLikedUIntId = 0;
+        try {
+            whoLikedUIntId = std::stoull(whoLikedId);
+        } catch (const std::exception& e) {
+            LOG_ERROR << "Canot parse userId " << whoLikedId;
+            resp->setCustomStatusCode(400);
+            callback(resp);
+            return;
+        }
+        
+        TUserId targetLikeUIntId = 0;
+        try {
+            targetLikeUIntId = std::stoull(targetLikeId);
+        } catch (const std::exception& e) {
+            LOG_ERROR << "Canot parse userId " << targetLikeId;
+            resp->setCustomStatusCode(400);
+            callback(resp);
+            return;
+        }
+
+        if (dislike) {
+            redisAdapter.SetDislike(whoLikedUIntId, targetLikeUIntId);
+        } else {
+            redisAdapter.SetLike(whoLikedUIntId, targetLikeUIntId);
+        }
+    }
 } // namespace handlers
