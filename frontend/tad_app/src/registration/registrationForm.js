@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
-import { Link } from 'react-router-dom';
-import { BrowserRouter as Router, Route, Switch, useNavigate } from "react-router-dom";
-import md5 from 'md5'
+import { Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useNavigate,
+} from "react-router-dom";
+import md5 from "md5";
 function RegistrationPage() {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
@@ -11,22 +16,21 @@ function RegistrationPage() {
   const [city, setCity] = useState("");
   const [bio, setBio] = useState("");
   const [error, setError] = useState("");
-  const [selectedFile, setSelectedFile] = useState("");
-
+  const [selectedFile, setSelectedFile] = useState(undefined);
   const [telegramId, setTelegramId] = useState("121444562");
   const [photoUrl, setPhotoUrl] = useState("");
   const [isUserRegistered, setIsUserRegistered] = useState(false);
-  const navigate = useNavigate()
-  const id = telegramId
+  const navigate = useNavigate();
+  const id = telegramId;
+
   useEffect(() => {
-    const id = telegramId;
     fetch(`https://testing.teanda.ru/api/start?user_id=${id}`)
       .then((response) => response.json())
       .then((data) => {
         setIsUserRegistered(data.isRegistered);
       })
       .catch((error) => {
-        console.error("Ошибка запроса на сервер:", error);
+        console.error("Server error", error);
       });
   }, []);
 
@@ -39,9 +43,7 @@ function RegistrationPage() {
       const initDataUnsafeContent = JSON.stringify(
         window.Telegram.WebApp.initDataUnsafe
       );
-
       const initDataUnsafeField = document.getElementById("initDataUnsafe");
-
       if (initDataUnsafeField) {
         initDataUnsafeField.value = initDataUnsafeContent;
       }
@@ -54,10 +56,10 @@ function RegistrationPage() {
       window.Telegram.WebApp &&
       window.Telegram.WebApp.initData
     ) {
+      const initDataContent = JSON.stringify(window.Telegram.WebApp.initData);
       const initDataContent = decodeURIComponent(window.Telegram.WebApp.initData);
 
       const initDataField = document.getElementById("initData");
-
       if (initDataField) {
         initDataField.value = initDataContent;
       }
@@ -83,7 +85,6 @@ function RegistrationPage() {
       setError("Name should contain only letters and spaces.");
       return false;
     }
-
     if (trimmedName.length > 20) {
       setError("Name should not exceed 20 characters.");
       return false;
@@ -124,16 +125,16 @@ function RegistrationPage() {
   //     }
   //   };
 
-
-
   const uploadPhotoAndGetUrl = () => {
     const formData = new FormData();
     formData.append("photo", selectedFile);
-    const hash = md5(selectedFile)
-    return fetch(`https://testing.teanda.ru/mds/upload?user_id=${telegramId}&format=jpeg&md5=${hash}`, {
-      method: "POST",
-      body: formData,
-    })
+    return fetch(
+      `https://testing.teanda.ru/mds/upload?tg_id=${id}&format=jpg`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         if (data && data.photoUrl) {
@@ -148,7 +149,7 @@ function RegistrationPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateName(name) && validateAge(age) && !error) {
-      await uploadPhotoAndGetUrl()
+      await uploadPhotoAndGetUrl();
       if (photoUrl) {
         const userData = {
           name: name,
@@ -184,14 +185,14 @@ function RegistrationPage() {
     }
   };
 
-  if (isUserRegistered){
-    console.log("redirect")
+  if (isUserRegistered) {
+    console.log("redirect");
     navigate("/menu");
   }
 
   return (
     <div className="index">
-    <div className="overlap-group-wrapper">
+      <div className="overlap-group-wrapper">
         <div className="overlap">
           <img
             className="polygon"
@@ -203,7 +204,6 @@ function RegistrationPage() {
           </p>
         </div>
         <div className="div">
-
           <div className="rectangle" />
           <p className="span-wrapper">
             <label htmlFor="file" className="span">
@@ -218,19 +218,23 @@ function RegistrationPage() {
             </label>
           </p>
         </div>
-        <div className="overlap-2"> 
-{selectedFile ? ( 
-  <img className="element-1" src={URL.createObjectURL(selectedFile)} alt="Profile" /> 
-) : ( 
-  <div className="ellipse">
-    <img 
-  className="element" 
-  alt="Element" 
-  src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/-------1-2-1@2x.png" 
-/> 
-  </div> 
-)} 
-</div>
+        <div className="overlap-2">
+          {selectedFile ? (
+            <img
+              className="element-1"
+              src={URL.createObjectURL(selectedFile)}
+              alt="Profile"
+            />
+          ) : (
+            <div className="ellipse">
+              <img
+                className="element"
+                alt="Element"
+                src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/-------1-2-1@2x.png"
+              />
+            </div>
+          )}
+        </div>
         <div className="overlap-3">
           <p className="p">
             <span className="text-wrapper-2">Fill in all the fields</span>
@@ -383,13 +387,12 @@ function RegistrationPage() {
             src="https://cdn.animaapp.com/projects/651aba4011cd84613b508e5b/releases/651ac821780675569006a4a1/img/line-2-1@2x.png"
           />
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
             <input id="initData" type="text" />
         </div>
         <div className="form-group">
             <input id="initDataUnsafe" type="text" />
-
-         </div>
+         </div> */}
         <div className="overlap-4">
           <div className="rectangle-2" />
           <p className="span-wrapper-13">
