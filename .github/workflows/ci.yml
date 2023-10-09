@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Install deps
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: libjsoncpp-dev uuid-dev zlib1g-dev openssl libssl-dev
+          version: 1.0
+      - name: Build backend
+        run: |
+          sudo ln -s /usr/include/jsoncpp/json/ /usr/include/json
+          ./build.sh
+      - name: Archive binary artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: backend-binary
+          path: |
+            bin/server
+          retention-days: 3
