@@ -14,7 +14,7 @@ function Seacrh() {
               alt="Polygon"
               src="https://cdn.animaapp.com/projects/6522593a895771eda12b6b7a/releases/652259ebd148241fab287b78/img/polygon-1.svg"
             />
-            <div className="text-wrapper-search">ПОИСК ПАРЫ</div>
+            <div className="text-wrapper-search">Search</div>
           </div>
           <img
             className="element-search"

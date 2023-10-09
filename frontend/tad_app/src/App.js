@@ -3,7 +3,6 @@ import "./App.css";
 import Header from "./registration/header";
 import RegistrationForm from "./registration/registrationForm";
 import Menu from "./menu/menuForm";
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Seacrh from "./search/search";
 
