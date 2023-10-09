@@ -42,9 +42,7 @@ namespace aws_adapter {
 
     std::optional<std::string> TAdapter::UploadImage(
             const std::string& data,
-            const std::string& imageFormat,
-            const std::string& md5Sum,
-            const std::string& userId
+            const std::string& filename
     ) {
         //ToDo: upload images converted into .webp format
         if (data.size() > 2 * 1024 * 1024) { // 2 Mb
@@ -52,12 +50,11 @@ namespace aws_adapter {
             return std::nullopt;
         }
 
-        const std::string fileName = userId + "_" + md5Sum + "." + imageFormat;
         const auto dataStream = std::make_shared<std::stringstream>(data);
 
         Aws::S3::Model::PutObjectRequest request;
         request.SetBucket(Bucket);
-        request.SetKey(fileName);
+        request.SetKey(filename);
         request.SetBody(dataStream);
 
         const auto outcome = Client->PutObject(request);
@@ -67,7 +64,7 @@ namespace aws_adapter {
             return std::nullopt;
         }
 
-        return fileName;
+        return filename;
     }
 
     std::optional<std::string> TAdapter::LoadImage(const std::string& id) {

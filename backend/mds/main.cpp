@@ -58,21 +58,19 @@ int main(int argc, char* argv[])
     });
 
     drogon::app().registerHandler(
-        "/upload?user_id={user-id}&format={format}&md5={md5}",
+        "/upload?tg_id={user-id}&format={format}",
         [&adapter](
             const drogon::HttpRequestPtr &req,
             std::function<void(const drogon::HttpResponsePtr &)> &&callback,
             const std::string& userId,
-            const std::string& format,
-            const std::string& md5
+            const std::string& format
         ) {
             UploadHandler(
                 adapter,
                 req,
                 std::move(callback),
                 userId,
-                format,
-                md5
+                format
             );
         },
         {drogon::Post}
