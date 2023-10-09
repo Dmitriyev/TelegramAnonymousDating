@@ -117,7 +117,8 @@ namespace db_adapter {
                 "orientation = " << user.Orientation << ", " <<
                 "city = '" << user.City << "', " <<
                 "bio = '" << user.Bio << "', " <<
-                "avatars = " << StringVectorToPostgreSQLFormat(user.Avatars) << " " <<
+                "avatars = " << StringVectorToPostgreSQLFormat(user.Avatars) << ", " <<
+                "target_sex = " << user.TargetSex << " "
                 "WHERE " << IdCol << " =  " << user.Id << ";";
 
             work.exec0(updateCommand.str());

@@ -22,8 +22,8 @@ namespace db_adapter {
                 LOG_ERROR << "Failed lpush " << userLikesKey << " " << targetUserId;
             },
             "lpush %s %s",
-            userLikesKey,
-            std::to_string(targetUserId)
+            userLikesKey.c_str(),
+            targetUserId
         );
 
         RedisClient->execCommandAsync(
@@ -31,24 +31,25 @@ namespace db_adapter {
             [&](const std::exception &err) {
                 LOG_ERROR << "Failed lpush " << targetUserLikesKey << " " << userId;
             },
-            "lpush %s %s",
-            targetUserLikesKey,
-            std::to_string(userId)
+            "lpush %s %d",
+            targetUserLikesKey.c_str(),
+            userId
         );
     }
 
     void TRedisAdapter::SetDislike(common::TUserId userId, common::TUserId targetUserId) {
         const auto userDislikesKey = FormatKey("user", userId, "dislikes");
         const auto targetUserDislikesKey = FormatKey("user", targetUserId, "dislike_me");
+        LOG_ERROR << "LPUSH " << userDislikesKey << " " << targetUserDislikesKey;
         
         RedisClient->execCommandAsync(
             [](const drogon::nosql::RedisResult&) {},
             [&](const std::exception &err) {
                 LOG_ERROR << "Failed lpush " << userDislikesKey << " " << targetUserId;
             },
-            "lpush %s %s",
-            userDislikesKey,
-            std::to_string(targetUserId)
+            "lpush %s %d",
+            userDislikesKey.c_str(),
+            targetUserId
         );
 
         RedisClient->execCommandAsync(
@@ -56,9 +57,9 @@ namespace db_adapter {
             [&](const std::exception &err) {
                 LOG_ERROR << "Failed lpush " << targetUserDislikesKey << " " << userId;
             },
-            "lpush %s %s",
-            targetUserDislikesKey,
-            std::to_string(userId)
+            "lpush %s %d",
+            targetUserDislikesKey.c_str(),
+            userId
         );
     }
 
@@ -69,9 +70,13 @@ namespace db_adapter {
         std::vector<common::TUserId> result;
         auto status = RedisClient->execCommandSync<bool>(
             [&](const RedisResult &r) {
+                if (r.type() != drogon::nosql::RedisResultType::kArray) {
+                    LOG_ERROR << "Wrong likes type";
+                    return false;
+                }
                 const auto array = r.asArray();
                 for (const auto& item : array) {
-                    result.push_back(item.asInteger());
+                    result.push_back(std::stoull(item.asString()));
                 }
                 return true;
             },
@@ -80,9 +85,13 @@ namespace db_adapter {
         );
         status = RedisClient->execCommandSync<bool>(
             [&](const RedisResult &r) {
+                if (r.type() != drogon::nosql::RedisResultType::kArray) {
+                    LOG_ERROR << "Wrong dislikes type";
+                    return false;
+                }
                 const auto array = r.asArray();
                 for (const auto& item : array) {
-                    result.push_back(item.asInteger());
+                    result.push_back(std::stoull(item.asString()));
                 }
                 return true;
             },

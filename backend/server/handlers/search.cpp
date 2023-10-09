@@ -36,7 +36,9 @@ namespace handlers {
             return;
         }
 
+        LOG_ERROR << "REDIS /start";
         const auto viewedUserIds = redisAdapter.GetViewedUserIds(userIdUInt);
+        LOG_ERROR << "REDIS /end";
         const auto candidates = adapter.GetMatchCandidates(userData.value(), page);
         std::vector<common::TUserId> filteredCandidates;
         for (const auto& user : candidates) {
@@ -85,5 +87,6 @@ namespace handlers {
         } else {
             redisAdapter.SetLike(whoLikedUIntId, targetLikeUIntId);
         }
+        callback(resp);
     }
 } // namespace handlers
