@@ -22,9 +22,7 @@ namespace aws_adapter {
 
         std::optional<std::string> UploadImage(
             const std::string& data,
-            const std::string& imageFormat,
-            const std::string& md5Sum,
-            const std::string& userId
+            const std::string& filename
         );
 
         std::optional<std::string> LoadImage(const std::string& id);

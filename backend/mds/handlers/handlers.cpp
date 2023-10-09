@@ -6,7 +6,7 @@
 
 
 namespace {
-    std::string str_toupper(std::string s)
+    std::string StrToUpper(std::string s)
     {
         std::transform(s.begin(), s.end(), s.begin(), 
             [](unsigned char c){
@@ -14,10 +14,6 @@ namespace {
             }
         );
         return s;
-    }
-
-    bool CheckMD5Sum(const std::string& data, const std::string& md5) {
-        return trantor::utils::toHexString(trantor::utils::md5(data.c_str(), data.size())) == str_toupper(md5);
     }
 
     static const std::unordered_set<std::string> AllowedImageFormats = {
@@ -38,8 +34,7 @@ namespace handlers {
         const drogon::HttpRequestPtr& req,
         std::function<void(const drogon::HttpResponsePtr&)>&& callback,
         const std::string& userId,
-        const std::string& format,
-        const std::string& md5
+        const std::string& format
     ) {
         auto resp = HttpResponse::newHttpResponse();
         const std::string reqBody(req->getBody());
@@ -51,21 +46,18 @@ namespace handlers {
             return;
         }
 
-        if (!AllowedImageFormats.count(str_toupper(format))) {
+        if (!AllowedImageFormats.count(StrToUpper(format))) {
             LOG_ERROR << "Wrong image format";
             resp->setCustomStatusCode(400);
             callback(resp);
             return;
         }
 
-        if (!CheckMD5Sum(reqBody, md5)) {
-            LOG_ERROR << "Request body corrupted";
-            resp->setCustomStatusCode(400);
-            callback(resp);
-            return;
-        }
+        const auto bodyMd5 = trantor::utils::toHexString(trantor::utils::md5(reqBody.c_str(), reqBody.size()));
+        const auto userIdMd5 = trantor::utils::toHexString(trantor::utils::md5(userId.c_str(), userId.size()));
+        const auto filename = userIdMd5 + "_" + bodyMd5 + "." + format;
 
-        const auto uploadResult = adapter.UploadImage(reqBody, format, md5, userId);
+        const auto uploadResult = adapter.UploadImage(reqBody, filename);
         if (!uploadResult.has_value()) {
             LOG_ERROR << "Error uploading file";
             resp->setCustomStatusCode(500);

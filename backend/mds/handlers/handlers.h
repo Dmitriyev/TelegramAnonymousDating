@@ -13,8 +13,7 @@ namespace handlers {
         const drogon::HttpRequestPtr& req,
         std::function<void(const drogon::HttpResponsePtr&)>&& callback,
         const std::string& userId,
-        const std::string& format,
-        const std::string& md5
+        const std::string& format
     );
 
     void GetHandler(
