@@ -7,14 +7,13 @@ Storage works over [amazon object storage](https://aws.amazon.com/ru/s3/). Mds i
 
 ## Handlers
 
-### /upload?user_id={user-id}&format={format}&md5={md5}
+### /upload?tg_id={user-id}&format={format}
 
 Uploads image into storage. Implements POST method with binary image data in body.
 
 **Parametrs:**
-- id: uint. User's telegram ID
+- tg_id: uint. User's telegram ID
 - format: string. Image extension. Supported formats: gif, png, jpg, jpeg
-- md5: string. File md5 checksum
 
 **Return value:**
 ```
@@ -24,7 +23,7 @@ Uploads image into storage. Implements POST method with binary image data in bod
 ```
 
 **Error codes:**
-* 400 Reasons: empty request body, not allowed format of image, md5 cecksum mismatch;
+* 400 Reasons: empty request body, not allowed format of image;
 * 500 Error writing data into object storage.
 
 ### /avatar?id={id}
