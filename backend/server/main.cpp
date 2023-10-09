@@ -9,7 +9,6 @@
 #include <server_config/config.h>
 #include <utils/json_utils.h>
 
-
 using namespace auth;
 using namespace config;
 using namespace db_adapter;
@@ -38,6 +37,10 @@ int main(int argc, char *argv[]) {
 
     const auto authorizer = MakeAuthorizer(configJson.value());
     VerifyCondition(authorizer.has_value(), "No telegram token provided");
+
+    std::stringstream tgApiHttpSs;
+    tgApiHttpSs << "https://api.telegram.org/bot" << authorizer.value()->GetToken();
+    auto client = drogon::HttpClient::newHttpClient(tgApiHttpSs.str());
 
     const TTableNames tableNames = {
         .UsersTable = config.value().PostgreSQLUsersTable,
@@ -109,18 +112,19 @@ int main(int argc, char *argv[]) {
 
     drogon::app().registerHandler(
         "/like?user_id={user-id}&target_user_id={target-user-id}",
-        [](const drogon::HttpRequestPtr &req, std::function<void(const drogon::HttpResponsePtr &)> &&callback, const std::string& userId, const std::string& targetUserId) {
+        [&authorizer, &client](const drogon::HttpRequestPtr &req, std::function<void(const drogon::HttpResponsePtr &)> &&callback, const std::string& userId, const std::string& targetUserId) {
             TRedisAdapter redis(drogon::app().getRedisClient());
-            LikeHandler(req, std::move(callback), redis, userId, targetUserId, false);
+            const auto tgUserId = authorizer.value()->GetUserId(req->getHeader(InitDataHeaderName));
+            LikeHandler(req, client, std::move(callback), redis, userId, targetUserId, tgUserId, false);
         },
         {drogon::Get}
     );
 
     drogon::app().registerHandler(
         "/dislike?user_id={user-id}&target_user_id={target-user-id}",
-        [](const drogon::HttpRequestPtr &req, std::function<void(const drogon::HttpResponsePtr &)> &&callback, const std::string& userId, const std::string& targetUserId) {
+        [&client](const drogon::HttpRequestPtr &req, std::function<void(const drogon::HttpResponsePtr &)> &&callback, const std::string& userId, const std::string& targetUserId) {
             TRedisAdapter redis(drogon::app().getRedisClient());
-            LikeHandler(req, std::move(callback), redis, userId, targetUserId, true);
+            LikeHandler(req, client, std::move(callback), redis, userId, targetUserId, std::nullopt, true);
         },
         {drogon::Get}
     );

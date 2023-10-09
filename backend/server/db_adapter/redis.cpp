@@ -63,6 +63,29 @@ namespace db_adapter {
         );
     }
 
+    std::vector<common::TUserId> TRedisAdapter::GetLikesMe(common::TUserId userId) {
+        const auto userLikesMeKey = FormatKey("user", userId, "likes_me");
+        
+        std::vector<common::TUserId> result;
+        auto status = RedisClient->execCommandSync<bool>(
+            [&](const RedisResult &r) {
+                if (r.type() != drogon::nosql::RedisResultType::kArray) {
+                    LOG_ERROR << "Wrong likes me type";
+                    return false;
+                }
+                const auto array = r.asArray();
+                for (const auto& item : array) {
+                    result.push_back(std::stoull(item.asString()));
+                }
+                return true;
+            },
+            "lrange %s 0 -1",
+            userLikesMeKey.c_str()
+        );
+
+        return result;
+    }
+
     std::vector<common::TUserId> TRedisAdapter::GetViewedUserIds(common::TUserId userId) {
         const auto userLikesKey = FormatKey("user", userId, "likes");
         const auto userDislikesKey = FormatKey("user", userId, "dislikes");

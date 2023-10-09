@@ -45,10 +45,12 @@ namespace handlers {
 
     void LikeHandler(
         const drogon::HttpRequestPtr& req,
+        drogon::HttpClientPtr client,
         std::function<void(const drogon::HttpResponsePtr&)>&& callback,
         db_adapter::TRedisAdapter& redisAdapter,
         const std::string& whoLikedId,
         const std::string& targetLikeId,
+        std::optional<uint64_t> tgUserId,
         bool dislike
     );
 }
