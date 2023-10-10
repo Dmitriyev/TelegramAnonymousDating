@@ -19,4 +19,13 @@ namespace utils {
     std::string GetStringValueFromJson(const Json::Value& value, const std::string& key);
     uint32_t GetUIValueFromJson(const Json::Value& value, const std::string& key);
     std::vector<std::string> GetStringVectorFromJson(const Json::Value& value, const std::string& key);
+
+    template <class T>
+    Json::Value ToJson(const std::vector<T>& vec) {
+        Json::Value value(Json::arrayValue);
+        std::for_each(vec.begin(), vec.end(), [&value](const T& vecValue) {
+            value.append(vecValue);
+        });
+        return value;
+    }
 }

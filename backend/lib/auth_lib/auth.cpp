@@ -8,6 +8,7 @@
 #include <array>
 #include <sstream>
 #include <map>
+#include <unordered_map>
 
 
 namespace {
@@ -15,6 +16,8 @@ namespace {
 
     static const std::string DebugKeyName = "debug_enabled";
     static const std::string HashKey = "hash";
+    static const std::string UserKey = "user";
+    static const std::string IdKey = "id";
 
     std::string ToHex(const std::string& str) {
         std::stringstream ss;
@@ -32,6 +35,14 @@ namespace {
         bool IsUserAuthentificated(const std::string&) const override {
             return true;
         } 
+
+        std::optional<uint64_t> GetUserId(const std::string& initData) const override {
+            return std::nullopt;
+        }
+
+        std::string GetToken() const override {
+            return "";
+        }
     };
 
     class TAuthorizer : public auth::IAuthorizer {
@@ -57,6 +68,28 @@ namespace {
 
             return ToHex(CalcHmacSHA256(dataCheckString, secretKey)) == hash;
         }
+    
+    std::optional<uint64_t> GetUserId(const std::string& initData) const override {
+        if (initData.empty()) {
+            return std::nullopt;
+        }
+        
+        const auto initDataParsed = ParseInitData(initData);
+        if (!initDataParsed.contains(UserKey)) {
+            return std::nullopt;
+        }
+
+        const auto userDataParsed = ParseUserData(initDataParsed.at(UserKey));
+        if (!userDataParsed.contains(IdKey)) {
+            return std::nullopt;
+        }
+
+        return std::stoull(userDataParsed.at(IdKey));
+    }
+
+    std::string GetToken() const override {
+        return Token;
+    }
 
     private:
         std::string CalcHmacSHA256(const std::string msg, const std::string& decodedKey) const {
@@ -109,6 +142,33 @@ namespace {
             }
             
             return result;            
+        }
+
+        std::unordered_map<std::string, std::string> ParseUserData(const std::string& rawUserData) const {
+            size_t pos = 0;
+            const auto isSpeciaSymbol = [&rawUserData, &pos]() {
+                const auto ch = rawUserData[pos];
+                return ch == '"' || ch == ':' || ch == ',' || ch == '{' || ch == '}';
+            };
+            const auto parseToken = [&rawUserData, &pos, &isSpeciaSymbol]() {
+                const auto begin = pos;
+                for (; !isSpeciaSymbol(); ++pos);
+                const auto end = pos;
+                return std::string(rawUserData.begin() + begin, rawUserData.begin() + end);
+            };
+
+            std::unordered_map<std::string, std::string> result;
+            while (pos < rawUserData.size()) {
+                if (isSpeciaSymbol()) {
+                    ++pos;
+                    continue;
+                }
+                const auto key = parseToken();
+                for (; isSpeciaSymbol(); ++pos);
+                const auto value = parseToken();
+                result.emplace(key, value);
+            }
+            return result;
         }
 
     private:

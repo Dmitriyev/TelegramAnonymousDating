@@ -14,6 +14,9 @@ namespace config {
         std::string PostgreSQLUsersTable;
         std::string PostgreSQLUser;
         std::string PostgreSQLPassword;
+
+        std::string RedisHost;
+        uint32_t RedisPort;
     };
 
     std::optional<TConfig> ParseConfig(const Json::Value& configJson);

@@ -7,6 +7,8 @@
 namespace {
     // Column names
     static const std::string IdCol = "id";
+    static const std::string SexCol = "sex";
+    static const std::string GeoCol = "city";
 
     enum EColumnIndexes {
         Id = 0,
@@ -17,6 +19,7 @@ namespace {
         City,
         Bio,
         Avatars,
+        TargetSex
     };
 
     std::string StringVectorToPostgreSQLFormat(const std::vector<std::string>& stringVector) {
@@ -53,6 +56,20 @@ namespace {
 
         return result;
     }
+
+    std::string FormatSex(uint32_t targetSex) {
+        std::stringstream ss;
+        if (targetSex & static_cast<uint32_t>(common::ESex::Man)) {
+            ss << "'" << static_cast<uint32_t>(common::ESex::Man) << "'";    
+        }
+        if (targetSex & static_cast<uint32_t>(common::ESex::Woman)) {
+            if (!ss.view().empty()) {
+                ss << ", ";
+            }
+            ss << "'" << static_cast<uint32_t>(common::ESex::Woman) << "'";    
+        }
+        return ss.str();
+    }
 }
 
 namespace db_adapter {
@@ -76,7 +93,8 @@ namespace db_adapter {
                 user.Orientation << ", " <<
                 "'" << user.City << "', " <<
                 "'" << user.Bio << "', " <<
-                StringVectorToPostgreSQLFormat(user.Avatars) << ");";
+                StringVectorToPostgreSQLFormat(user.Avatars) << "', " <<
+                user.TargetSex << ");";
 
             work.exec0(insertCommand.str());
             work.commit();
@@ -99,7 +117,8 @@ namespace db_adapter {
                 "orientation = " << user.Orientation << ", " <<
                 "city = '" << user.City << "', " <<
                 "bio = '" << user.Bio << "', " <<
-                "avatars = " << StringVectorToPostgreSQLFormat(user.Avatars) << " " <<
+                "avatars = " << StringVectorToPostgreSQLFormat(user.Avatars) << ", " <<
+                "target_sex = " << user.TargetSex << " "
                 "WHERE " << IdCol << " =  " << user.Id << ";";
 
             work.exec0(updateCommand.str());
@@ -139,6 +158,7 @@ namespace db_adapter {
                 .City = row[EColumnIndexes::City].as<decltype(TUser::City)>(),
                 .Bio = row[EColumnIndexes::Bio].as<decltype(TUser::Bio)>(),
                 .Avatars = ConvertPQXXArrayToVector(row[EColumnIndexes::Avatars]),
+                .TargetSex = row[EColumnIndexes::TargetSex].as<decltype(TUser::TargetSex)>(),
             };
             return userData;
         } catch (const std::exception& e) {
@@ -164,6 +184,42 @@ namespace db_adapter {
             LOG_ERROR << "Canot read user data from table " << TableNames.UsersTable << ". " << e.what();
             return std::nullopt;
         }
+    }
+
+    std::vector<common::TUser> TPostgreSQLAdapter::GetMatchCandidates(const common::TUser& user, uint32_t page) {
+        std::vector<common::TUser> users;
+        pqxx::work work(Connection);
+        try {
+            std::stringstream selectCommand;
+            selectCommand << "SELECT * FROM " << TableNames.UsersTable << " WHERE " << GeoCol << " = '" << user.City
+                << "' AND " << SexCol << " IN (" << FormatSex(user.TargetSex) << ") AND " << IdCol << " != " << user.Id << " LIMIT " << page * 100 << ";";
+            const auto res = work.exec(selectCommand.str());
+            
+            if (res.size() == 0) {
+                LOG_ERROR << "No users finded for user id " << user.Id << " in " << TableNames.UsersTable << " table";
+                return {};
+            }
+            for (const auto& line : res) {
+                if (line.size() != TUser::FieldsCount) {
+                    LOG_ERROR << "Wrong table schema in " << TableNames.UsersTable << " table";
+                    return {};
+                }
+                auto& user = users.emplace_back();
+                
+                user.Id = line[EColumnIndexes::Id].as<decltype(TUser::Id)>();
+                user.Name = line[EColumnIndexes::Name].as<decltype(TUser::Name)>();
+                user.Age = line[EColumnIndexes::Age].as<decltype(TUser::Age)>();
+                user.Sex = line[EColumnIndexes::Sex].as<decltype(TUser::Sex)>();
+                user.Orientation =  line[EColumnIndexes::Orientation].as<decltype(TUser::Orientation)>();
+                user.City = line[EColumnIndexes::City].as<decltype(TUser::City)>();
+                user.Bio = line[EColumnIndexes::Bio].as<decltype(TUser::Bio)>();
+                user.TargetSex = line[EColumnIndexes::TargetSex].as<decltype(TUser::TargetSex)>();
+            }
+            return users;
+        } catch (const std::exception& e) {
+            LOG_ERROR << "Canot search user data in table " << TableNames.UsersTable << ". " << e.what();
+        }
+        return {};
     }
 
     std::optional<TPostgreSQLAdapterPtr> MakePostgeSQLAdapter(

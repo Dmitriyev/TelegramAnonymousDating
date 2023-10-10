@@ -15,6 +15,8 @@ namespace auth {
         virtual ~IAuthorizer() = default;
 
         virtual bool IsUserAuthentificated(const std::string& initData) const = 0;
+        virtual std::optional<uint64_t> GetUserId(const std::string& initData) const = 0;
+        virtual std::string GetToken() const = 0;
     };
 
     using TAuthorizerPtr = std::unique_ptr<IAuthorizer>;
