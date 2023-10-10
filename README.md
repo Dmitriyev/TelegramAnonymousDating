@@ -16,6 +16,10 @@ App architecture diagram:
 ![app architecture](/doc/media/arch.png)
 
 ## Build & Run
+
+### Frontend
+[Build & start](./frontend/tad_app/README.md)
+
 ### Installing dependencies
 #### Backend (server + mds)
 
@@ -42,9 +46,6 @@ Ubuntu 22.04 users can run following script:
 ```
 sudo scripts/ubuntu_22_04_install_system_deps.sh
 ```
-
-#### Frontend
-[Build & start](./frontend/tad_app.README.md)
 
 ### Server build & run
 #### Building
