@@ -17,6 +17,8 @@ namespace config {
 
         std::string RedisHost;
         uint32_t RedisPort;
+        std::string RedisUsername;
+        std::string RedisPassword;
     };
 
     std::optional<TConfig> ParseConfig(const Json::Value& configJson);

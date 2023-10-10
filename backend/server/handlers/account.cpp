@@ -125,12 +125,6 @@ namespace handlers {
         }
 
         const auto userId = redisAdapter.ConvertTgUserIdToUserId(tgUserIdUInt);
-        if (!userId.has_value()) {
-            LOG_ERROR << "Canot check account existance " << tgUserId;
-            resp->setCustomStatusCode(500);
-            callback(resp);
-            return;
-        }
 
         Json::Value result;
         result["user_registred"] = userId.has_value();
