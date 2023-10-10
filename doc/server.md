@@ -12,6 +12,8 @@ Mapping telegram id->internal id stores into Redis
 
 ![Mapping](./media/id_mapping.png)
 
+Every handler that takes telegram id checks it's consistency with [telegram initData](https://docs.twa.dev/docs/launch-params/init-data) passed
+
 ## Handlers
 
 ### /register
@@ -37,15 +39,32 @@ curl -H "Content-Type: application/json" -d '{"name": "Alex", <...>}' -X POST ht
 * 400 Reasons: empty request body, incorrect json passed
 * 500 Error writing database
 
+**Returns:**
+```
+{
+    "user_id": <internal user id>
+}
+```
+
 ### /edit\_account
 
-Edits user account. Parameter are same as in the [/register](#-/register) header. Implements POST method with json body.\
+Edits user account. Parameter are same as in the [/register](#-/register) header. Implements POST method with json body.
+
+**Json body fields:**
+Are same with ```/register``` handler but ```id``` is **internal** not telegram
+
+**Returns:**
+```
+{
+    "user_id": <internal user id>
+}
+```
 
 **Error codes:**
 * 400 Reasons: empty request body, incorrect json passed
 * 500 Error writing database
 
-### /account\_info\?user\_id\=\<id\>
+### /account\_info\?user\_id\=\<internal id\>
 
 Returns account info. Implements GET method. Returns json with keys described in [/register](#-/register) method
 
@@ -53,15 +72,38 @@ Returns account info. Implements GET method. Returns json with keys described in
 * 400 Not-numeric user_id passed
 * 500 Error reading database
 
-### /start\?user\_id\=\<id\>
+### /start\?user\_id\=\<telegram id\>
 
 Checks is user registred in app. Returns json with following format:\
 ```
 {
-    "user_registred": <true/false>
+    "user_registred": <true/false>,
+    "user_id": <internal user id> // if user is registred
 }
 ```
 
 **Error codes:**
 * 400 Not-numeric user_id passed
 * 500 Error reading database
+
+### /search?user_id={internal id}&page={page}
+Search users that user did not liked/disliked before.
+One ```page``` contains 100 users.
+
+**Error codes:**
+* 400 Not-numeric user_id passed
+* 500 Error reading database
+
+**Returns:**
+```
+{
+    "search": [<list of internal user ids>]
+}
+```
+
+### /like & /dislike user_id={internal id}&target_user_id={internal id}
+Writes info about like ore dislike into database. If user likes another user that liked him before, server sends notification about it into telegram bot to both users
+
+**Error codes:**
+* 400 Not-numeric user_id passed
+* 500 Error writing database
