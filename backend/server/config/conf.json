@@ -8,5 +8,9 @@
     "postgresql_user": "<>",
     "postgresql_password": "<>",
     //"debug_enabled": true, // Uncomment this line for debugging. It will disable authorization check
-    "telegram_token": ""
+    "telegram_token": "",
+    "redis_host": "127.0.0.1",
+    "redis_port": 6379,
+    "redis_username": "",
+    "redis_password": ""
 }

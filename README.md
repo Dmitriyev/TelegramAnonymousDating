@@ -37,6 +37,7 @@ libpqxx-dev
 libcurl4-openssl-dev
 zlib1g-dev
 libssl-dev
+libhiredis-dev
 postgresql
 postgresql-contrib
 ```
