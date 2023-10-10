@@ -11,7 +11,9 @@ namespace handlers {
         TPostgreSQLAdapter& adapter,
         const HttpRequestPtr& req,
         std::function<void(const HttpResponsePtr&)>&& callback,
-        TAccountAction action
+        TAccountAction action,
+        common::TUserId tgUserId,
+        db_adapter::TRedisAdapter redisAdapter
     ) {
         auto resp = HttpResponse::newHttpResponse();
         const auto reqBody = req->getJsonObject();
@@ -22,7 +24,7 @@ namespace handlers {
             return;
         }
 
-        const auto user = ExtractUserDataFromJson(*reqBody);
+        auto user = ExtractUserDataFromJson(*reqBody);
         if (!user.has_value()) {
             LOG_ERROR << "Incorrect user json data";
             resp->setCustomStatusCode(400);
@@ -32,8 +34,29 @@ namespace handlers {
 
         bool res = false;
         if (action == TAccountAction::Create) {
+            auto userId = redisAdapter.ConvertTgUserIdToUserId(tgUserId, true);
+            if (!userId.has_value()) {
+                LOG_ERROR << "tgUserId to userId connvertation error";
+                resp->setCustomStatusCode(500);
+                callback(resp);
+                return;
+            }
+            user->Id = userId.value();
             res = adapter.InsertUserData(user.value());
         } else if (action == TAccountAction::Update) {
+            auto userId = redisAdapter.ConvertTgUserIdToUserId(tgUserId);
+            if (!userId.has_value()) {
+                LOG_ERROR << "user not registered";
+                resp->setCustomStatusCode(400);
+                callback(resp);
+                return;
+            }
+            if (userId.value() != user->Id) {
+                LOG_ERROR << "difference between init data user id and json";
+                resp->setCustomStatusCode(400);
+                callback(resp);
+                return;
+            }
             res = adapter.UpdateUserData(user.value());
         } else {
             LOG_ERROR << "Unknown account action";
@@ -46,6 +69,9 @@ namespace handlers {
             return;
         }
 
+        Json::Value result;
+        result["user_id"] = user->Id;
+        resp = toResponse(result);
         callback(resp);
     }
 
@@ -81,33 +107,36 @@ namespace handlers {
     }
 
     void StartHanler(
-        db_adapter::TPostgreSQLAdapter& adapter,
+        db_adapter::TRedisAdapter& redisAdapter,
         const drogon::HttpRequestPtr& req,
         std::function<void(const drogon::HttpResponsePtr&)>&& callback,
-        const std::string& userId
+        const std::string& tgUserId
     ) {
         auto resp = HttpResponse::newHttpResponse();
 
-        TUserId userIdUInt = 0;
+        TUserId tgUserIdUInt = 0;
         try {
-            userIdUInt = std::stoull(userId);
+            tgUserIdUInt = std::stoull(tgUserId);
         } catch (const std::exception& e) {
-            LOG_ERROR << "Canot parse userId " << userId;
+            LOG_ERROR << "Canot parse userId " << tgUserId;
             resp->setCustomStatusCode(400);
             callback(resp);
             return;
         }
 
-        const auto userExists = adapter.IsUserRegistred(userIdUInt);
-        if (!userExists.has_value()) {
-            LOG_ERROR << "Canot check account existance " << userId;
+        const auto userId = redisAdapter.ConvertTgUserIdToUserId(tgUserIdUInt);
+        if (!userId.has_value()) {
+            LOG_ERROR << "Canot check account existance " << tgUserId;
             resp->setCustomStatusCode(500);
             callback(resp);
             return;
         }
 
         Json::Value result;
-        result["user_registred"] = userExists.value();
+        result["user_registred"] = userId.has_value();
+        if (userId.has_value()) {
+            result["user_id"] = userId.value();
+        }
         resp = toResponse(result);
         callback(resp);
     }

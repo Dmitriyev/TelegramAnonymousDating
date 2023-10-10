@@ -1,6 +1,8 @@
 #include "redis.h"
 
 namespace {
+    static const std::string UserCounterKey = "UserCounter";
+
     inline std::string FormatKey(const std::string& objectType, common::TUserId userId, const std::string& field) {
         std::stringstream ss;
         ss << objectType << ":" << userId << ":" << field;
@@ -122,5 +124,74 @@ namespace db_adapter {
             userDislikesKey.c_str()
         );
         return result;
+    }
+
+    
+    std::optional<common::TUserId> TRedisAdapter::ConvertTgUserIdToUserId(common::TUserId tgUserId, bool createIfNotExist) {
+        const auto tgUserIdToUserIdKey = FormatKey("tg_user", tgUserId, "user_id");
+        auto userId = RedisClient->execCommandSync<std::optional<common::TUserId>>(
+            [&](const RedisResult &r) -> std::optional<common::TUserId> {
+                if (r.type() == drogon::nosql::RedisResultType::kNil) {
+                    LOG_ERROR << "Can't find user with tgId = " << tgUserId;
+                    return std::nullopt;
+                }
+                return std::stoull(r.asString());
+            },
+            "get %s",
+            tgUserIdToUserIdKey.c_str()
+        );
+        if (createIfNotExist && !userId.has_value()) {
+            userId = RedisClient->execCommandSync<std::optional<common::TUserId>>(
+                [](const RedisResult &r) -> std::optional<common::TUserId> {
+                    if (r.type() != drogon::nosql::RedisResultType::kInteger) {
+                        LOG_ERROR << "Smth went wrong with UserCounter";
+                        return std::nullopt;
+                    }
+                    return r.asInteger();
+                },
+                "INCR %s",
+                UserCounterKey.c_str()
+            );
+            if (userId.has_value()) {
+                auto statusOk = RedisClient->execCommandSync<bool>(
+                    [](const RedisResult &r) {
+                        return r.type() == drogon::nosql::RedisResultType::kString && r.asString() == "OK";
+                    },
+                    "set %s %d",
+                    tgUserIdToUserIdKey.c_str(),
+                    userId.value()
+                );
+                if (statusOk) {
+                    const auto userIdToTgUserIdKey = FormatKey("user", userId.value(), "tg_user_id");
+                    statusOk = RedisClient->execCommandSync<bool>(
+                        [](const RedisResult &r) {
+                            return r.type() == drogon::nosql::RedisResultType::kString && r.asString() == "OK";
+                        },
+                        "set %s %d",
+                        userIdToTgUserIdKey.c_str(),
+                        tgUserId
+                    );
+                }
+                if (!statusOk) {
+                    return std::nullopt;
+                }
+            }
+        }
+        return userId;
+    }
+    std::optional<common::TUserId> TRedisAdapter::ConvertUserIdToTgUserId(common::TUserId userId) {
+        const auto userIdToTgUserIdKey = FormatKey("user", userId, "tg_user_id");
+        auto tgUserId = RedisClient->execCommandSync<std::optional<common::TUserId>>(
+            [&](const RedisResult &r) -> std::optional<common::TUserId> {
+                if (r.type() == drogon::nosql::RedisResultType::kNil) {
+                    LOG_ERROR << "Can't find user with Id = " << userId;
+                    return std::nullopt;
+                }
+                return std::stoull(r.asString());
+            },
+            "get %s",
+            userIdToTgUserIdKey.c_str()
+        );
+        return tgUserId;
     }
 } // namespace db_adapter

@@ -18,6 +18,9 @@ namespace db_adapter {
         // std::vector<common::TUserId> GetDislikes(common::TUserId userId);
 
         std::vector<common::TUserId> GetViewedUserIds(common::TUserId userId);
+
+        std::optional<common::TUserId> ConvertTgUserIdToUserId(common::TUserId tgUserId, bool createIfNotExist = false);
+        std::optional<common::TUserId> ConvertUserIdToTgUserId(common::TUserId userId);
     private:
         RedisClientPtr RedisClient;
     };

@@ -17,7 +17,9 @@ namespace handlers {
         db_adapter::TPostgreSQLAdapter& adapter,
         const drogon::HttpRequestPtr& req,
         std::function<void(const drogon::HttpResponsePtr&)>&& callback,
-        TAccountAction action 
+        TAccountAction action,
+        common::TUserId tgUserId,
+        db_adapter::TRedisAdapter redisAdapter
     );
 
     void AccountInfoHandler(
@@ -28,7 +30,7 @@ namespace handlers {
     );
 
     void StartHanler(
-        db_adapter::TPostgreSQLAdapter& adapter,
+        db_adapter::TRedisAdapter& redisAdapter,
         const drogon::HttpRequestPtr& req,
         std::function<void(const drogon::HttpResponsePtr&)>&& callback,
         const std::string& userId

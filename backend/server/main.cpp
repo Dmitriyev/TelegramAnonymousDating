@@ -71,16 +71,21 @@ int main(int argc, char *argv[]) {
 
     drogon::app().registerHandler(
         "/register",
-        [&postgesqlAdapter](const drogon::HttpRequestPtr &req, std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
-            AccountHandler(*postgesqlAdapter.value(), req, std::move(callback), TAccountAction::Create);
+        [&](const drogon::HttpRequestPtr &req, std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
+            const auto tgUserId = authorizer.value()->GetUserId(req->getHeader(InitDataHeaderName));
+            TRedisAdapter redis(drogon::app().getRedisClient());
+
+            AccountHandler(*postgesqlAdapter.value(), req, std::move(callback), TAccountAction::Create, tgUserId ? tgUserId.value() : 0, redis);
         },
         {drogon::Post}
     );
 
     drogon::app().registerHandler(
         "/edit_account",
-        [&postgesqlAdapter](const drogon::HttpRequestPtr &req, std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
-            AccountHandler(*postgesqlAdapter.value(), req, std::move(callback), TAccountAction::Update);
+        [&](const drogon::HttpRequestPtr &req, std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
+            const auto tgUserId = authorizer.value()->GetUserId(req->getHeader(InitDataHeaderName));
+            TRedisAdapter redis(drogon::app().getRedisClient());
+            AccountHandler(*postgesqlAdapter.value(), req, std::move(callback), TAccountAction::Update, tgUserId ? tgUserId.value() : 0, redis);
         },
         {drogon::Post}
     );
@@ -96,7 +101,8 @@ int main(int argc, char *argv[]) {
     drogon::app().registerHandler(
         "/start?user_id={user-id}",
         [&postgesqlAdapter](const drogon::HttpRequestPtr &req, std::function<void(const drogon::HttpResponsePtr &)> &&callback, const std::string& userId) {
-            StartHanler(*postgesqlAdapter.value(), req, std::move(callback), userId);
+            TRedisAdapter redis(drogon::app().getRedisClient());
+            StartHanler(redis, req, std::move(callback), userId);
         },
         {drogon::Get}
     );
