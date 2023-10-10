@@ -44,7 +44,7 @@ sudo scripts/ubuntu_22_04_install_system_deps.sh
 ```
 
 #### Frontend
-[ToDo avraam]
+[Build & start](./frontend/tad_app.README.md)
 
 ### Server build & run
 #### Building
