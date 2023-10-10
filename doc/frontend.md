@@ -6,10 +6,10 @@ There are 4 pages in app:
 4. Search
 
 ## Start using app
-[Start](./media/start.drawio.png)
+![Start](./media/start.drawio.png)
 
 ## Menu & edit profile
-[Menu & edit](./media/edit.png)
+![Menu & edit](./media/edit.png)
 
 ## Menu & search
-[search](./media/search.png)
+![search](./media/search.png)
