@@ -18,6 +18,8 @@ namespace config {
                 .PostgreSQLPassword = GetStringValueFromJson(configJson, "postgresql_password"),
                 .RedisHost = GetStringValueFromJson(configJson, "redis_host"),
                 .RedisPort = GetUIValueFromJson(configJson, "redis_port"),
+                .RedisUsername = GetStringValueFromJson(configJson, "redis_username"),
+                .RedisPassword = GetStringValueFromJson(configJson, "redis_password"),
             };
 
             return config;

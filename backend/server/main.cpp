@@ -67,7 +67,7 @@ int main(int argc, char *argv[]) {
         return drogon::HttpResponsePtr();
     });
 
-    drogon::app().createRedisClient(config.value().RedisHost, config.value().RedisPort);
+    drogon::app().createRedisClient(config.value().RedisHost, config.value().RedisPort, config->RedisUsername, config->RedisPassword);
 
     drogon::app().registerHandler(
         "/register",
