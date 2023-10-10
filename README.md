@@ -1,4 +1,19 @@
 # TelegramAnonymousDating
+## ToDo list
+There are some that we didn't have a time to do:
+<details>
+    
+<summary>List</summary>
+
+1. Unit tests
+2. Functionality tests
+3. Backend refactoring
+4. Frontend refactoring
+5. Good search ML algorythm
+6. Another json C++ library
+
+</details>
+
 ## Overview
 Telegram mini app for contest. This app is a dating platform. Implements classic matching logic: when user A likes profile of user B, both of them get links to of each others Telegram profiles
 
@@ -95,7 +110,8 @@ psql TAD -q -c "CREATE TABLE IF NOT EXISTS users (
     orientation SMALLINT NOT NULL,
     city VARCHAR(50) NOT NULL,
     bio TEXT,
-    avatars text[] NOT NULL
+    avatars text[] NOT NULL,
+    target_sex SMALLINT NOT NULL
 );"
 ```
 #### Run
