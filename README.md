@@ -8,7 +8,7 @@ Telegram anonymous dating is scalable ervice with microservice architecture.
 There are 3 microservices in app:
 1. Server. Implements buisnesslogic of the app. Language: C++. [Description](doc/server.md)
 2. Media data storage (mds). Storage of user's avatars. Language: C++. [Description](doc/mds.md)
-3. Frontend. Language: javascript + React
+3. Frontend. Language: javascript + React. [Description](doc/frontend.md)
 
 Also read about [authentification](doc/authentification.md) of users.
 
