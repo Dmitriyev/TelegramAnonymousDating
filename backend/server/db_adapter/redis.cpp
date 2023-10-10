@@ -155,7 +155,7 @@ namespace db_adapter {
             if (userId.has_value()) {
                 auto statusOk = RedisClient->execCommandSync<bool>(
                     [](const RedisResult &r) {
-                        return r.type() == drogon::nosql::RedisResultType::kString && r.asString() == "OK";
+                        return true;
                     },
                     "set %s %d",
                     tgUserIdToUserIdKey.c_str(),
@@ -165,7 +165,7 @@ namespace db_adapter {
                     const auto userIdToTgUserIdKey = FormatKey("user", userId.value(), "tg_user_id");
                     statusOk = RedisClient->execCommandSync<bool>(
                         [](const RedisResult &r) {
-                            return r.type() == drogon::nosql::RedisResultType::kString && r.asString() == "OK";
+                            return true;
                         },
                         "set %s %d",
                         userIdToTgUserIdKey.c_str(),

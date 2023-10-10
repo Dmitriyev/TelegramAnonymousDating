@@ -93,7 +93,7 @@ namespace db_adapter {
                 user.Orientation << ", " <<
                 "'" << user.City << "', " <<
                 "'" << user.Bio << "', " <<
-                StringVectorToPostgreSQLFormat(user.Avatars) << "', " <<
+                StringVectorToPostgreSQLFormat(user.Avatars) << ", " <<
                 user.TargetSex << ");";
 
             work.exec0(insertCommand.str());
