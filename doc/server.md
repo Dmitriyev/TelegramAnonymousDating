@@ -6,6 +6,12 @@ Source code kept in [backend/server](../backend/server) directory
 User accounts data stores in [PostgreSQL database](https://www.postgresql.org/).
 Information about user likes and dislikes stores in [Redis database](https://redis.io/)
 
+### Id match
+We use internal ids in our app. It guarantees confidentiality of user telegram id. It makes impossible to dump telegramm account info of user whose account you are watching.
+Mapping telegram id->internal id stores into Redis
+
+![Mapping](./media/id_mapping.png)
+
 ## Handlers
 
 ### /register
