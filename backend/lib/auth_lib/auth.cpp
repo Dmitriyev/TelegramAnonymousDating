@@ -6,10 +6,10 @@
 #include <utils/json_utils.h>
 
 #include <array>
-#include <sstream>
 #include <map>
+#include <sstream>
 #include <unordered_map>
-
+#include <iostream>
 
 namespace {
     using namespace utils;
@@ -53,6 +53,7 @@ namespace {
         }
 
         bool IsUserAuthentificated(const std::string& initData) const override {
+            std::cout << initData << std::endl;
             if (initData.empty()) {
                 return false;
             }
