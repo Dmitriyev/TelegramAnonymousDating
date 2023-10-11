@@ -110,19 +110,18 @@ namespace handlers {
         db_adapter::TRedisAdapter& redisAdapter,
         const drogon::HttpRequestPtr& req,
         std::function<void(const drogon::HttpResponsePtr&)>&& callback,
-        const std::string& tgUserId
+        const std::optional<uint64_t> tgUserId
     ) {
         auto resp = HttpResponse::newHttpResponse();
 
-        TUserId tgUserIdUInt = 0;
-        try {
-            tgUserIdUInt = std::stoull(tgUserId);
-        } catch (const std::exception& e) {
-            LOG_ERROR << "Canot parse userId " << tgUserId;
+        if (!tgUserId.has_value()) {
+            LOG_ERROR << "Canot extract userId ";
             resp->setCustomStatusCode(400);
             callback(resp);
             return;
         }
+
+        TUserId tgUserIdUInt = tgUserId.value();
 
         const auto userId = redisAdapter.ConvertTgUserIdToUserId(tgUserIdUInt);
 

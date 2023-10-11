@@ -33,7 +33,7 @@ namespace handlers {
         db_adapter::TRedisAdapter& redisAdapter,
         const drogon::HttpRequestPtr& req,
         std::function<void(const drogon::HttpResponsePtr&)>&& callback,
-        const std::string& userId
+        const std::optional<uint64_t> userId
     );
 
     void SearchHandler(

@@ -99,10 +99,11 @@ int main(int argc, char *argv[]) {
     );
 
     drogon::app().registerHandler(
-        "/start?user_id={user-id}",
-        [&postgesqlAdapter](const drogon::HttpRequestPtr &req, std::function<void(const drogon::HttpResponsePtr &)> &&callback, const std::string& userId) {
+        "/start",
+        [&postgesqlAdapter, &authorizer](const drogon::HttpRequestPtr &req, std::function<void(const drogon::HttpResponsePtr &)> &&callback) {
+            const auto tgUserId = authorizer.value()->GetUserId(req->getHeader(InitDataHeaderName));
             TRedisAdapter redis(drogon::app().getRedisClient());
-            StartHanler(redis, req, std::move(callback), userId);
+            StartHanler(redis, req, std::move(callback), tgUserId);
         },
         {drogon::Get}
     );
